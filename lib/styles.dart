@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:millad/data/palette.dart';
 
 const String FontNameDefault = 'Source Sans Pro';
+
+const LogoText = TextStyle(
+    fontSize: 19.0,
+    fontStyle: FontStyle.italic,
+    color: Palette.primaryText
+  );
 
 const TitleText = TextStyle(
   fontFamily: FontNameDefault,
