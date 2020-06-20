@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
@@ -34,16 +32,39 @@ class Home extends StatelessWidget {
   Widget _header() {
     return Container(
       color: Palette.primary,
-      height: 240.0,
+      height: 280.0,
       child: SafeArea(
         child: Column(
           children: [
             EmptySpace(height: 40.0,),
             _logo(),
             EmptySpace(height: 20.0,),
-
+            _searchBar()
           ],
         )
+      ),
+    );
+  }
+
+  
+
+  Widget _searchBar() {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 20),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Palette.background,
+          borderRadius:  BorderRadius.circular(32),
+        ),
+        child: TextField(
+          decoration: InputDecoration(
+            hintStyle: TextStyle(fontSize: 15),
+            hintText: 'Search..',
+            suffixIcon: Icon(Icons.search),
+            border: InputBorder.none,
+            contentPadding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+          ),
+        ),
       ),
     );
   }

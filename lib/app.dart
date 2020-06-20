@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
 
   RouteFactory _routes() {
     return (settings) {
-      final Map<String, dynamic> arguments = settings.arguments;
+      // final Map<String, dynamic> arguments = settings.arguments;
       Widget screen;
       switch (settings.name) {
         case AppRoute.WELLCOME_PAGE:
