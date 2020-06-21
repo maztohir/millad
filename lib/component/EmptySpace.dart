@@ -24,7 +24,10 @@ class EmptySpace extends StatelessWidget {
         height: height
       );
     } else {
-      return Expanded(child: Container());
+      return Expanded(
+        flex: 1,
+        child: Container()
+      );
     }
   }
 }

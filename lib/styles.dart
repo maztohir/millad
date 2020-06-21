@@ -30,6 +30,28 @@ const BodyPrimaryText1 = TextStyle(
   color: Palette.primaryText,
 );
 
+
+const TitleBackgroundText = TextStyle(
+  fontFamily: FontNameDefault,
+  fontWeight: FontWeight.w600,
+  fontSize: 14.0,
+  color: Palette.backgroundText,
+);
+
+const TitleBackgroundText1 = TextStyle(
+  fontFamily: FontNameDefault,
+  fontWeight: FontWeight.w500,
+  fontSize: 13.0,
+  color: Palette.backgroundText,
+);
+
+const BodyBackgroundText1 = TextStyle(
+  fontFamily: FontNameDefault,
+  fontWeight: FontWeight.w200,
+  fontSize: 12.0,
+  color: Palette.backgroundText,
+);
+
 const BodyText = TextStyle(
   fontFamily: FontNameDefault,
   fontWeight: FontWeight.normal,

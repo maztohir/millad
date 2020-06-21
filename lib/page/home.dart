@@ -25,7 +25,9 @@ class Home extends StatelessWidget {
       body: Column(
         children: [
           _header(),
-          _body()
+          Expanded(
+            child: _body(),
+          )
         ],
       )
     );
@@ -48,7 +50,7 @@ class Home extends StatelessWidget {
             EmptySpace(height: 20.0,),
             _searchBar(),
             EmptySpace(height: 40.0,),
-            _recentPage(),
+            _bookListHolder('Your recent book', Dummy.bookList, primary: true),
             EmptySpace(height: 20.0,),
           ],
         )
@@ -84,25 +86,27 @@ class Home extends StatelessWidget {
     );
   }
 
-  Widget _recentPage(){
-    const bookList = Dummy.bookList;
+  Widget _bookListHolder(title, List<Map<String, dynamic>> bookList, {primary: false}){
     return Container(
-      padding: EdgeInsets.only(left: 30.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text('Your recent open pages', 
-            style: TitlePrimaryText,
-            textAlign: TextAlign.start,
+          Container(
+            padding: EdgeInsets.only(left: 30.0),
+            child: Text(title, 
+              style: primary?TitlePrimaryText:TitleBackgroundText,
+              textAlign: TextAlign.start,
+            ),
           ),
           EmptySpace(height: 10.0,),
           Container(
+            padding: EdgeInsets.only(left: 23.0),
             height: 200,
             child: ListView(
               shrinkWrap: true,
               scrollDirection: Axis.horizontal,
               physics: BouncingScrollPhysics(),
-              children: bookList.map((book) => _bookcard(book)).toList(),
+              children: bookList.map((book) => _bookCard(book, primary: primary)).toList(),
             )
           )
         ]
@@ -110,45 +114,49 @@ class Home extends StatelessWidget {
     );
   }
 
-  Widget _bookcard(book){
+  Widget _card({primary: false}) {
     return Container(
-      padding: EdgeInsets.only(left: 5.0, top: 7.0, bottom: 7.0),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(15.0),
+          onTap: () => {},
+          child: Container(
+            height: 140.0,
+            width: 100.0,
+          ),
+        ),
+      ),
+      decoration: BoxDecoration(
+        borderRadius:  BorderRadius.circular(15),
+        color: primary?Palette.background:Palette.primary01,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black12,
+            blurRadius: 3,
+            spreadRadius:2,
+            offset: Offset(0.5,3)
+          ),
+        ],
+      ),
+      margin: EdgeInsets.only(right: 12.0),
+    );
+  }
+
+  Widget _bookCard(book, {primary: false}){
+    return Container(
+      padding: EdgeInsets.only(left: 5.0, top: 5.0, bottom: 5.0),
       child: Column(
         children: [
-          Container(
-            child: Material(
-              color: Colors.transparent,
-              child: InkWell(
-                borderRadius: BorderRadius.circular(15.0),
-                onTap: () => {},
-                child: Container(
-                  height: 140.0,
-                  width: 100.0,
-                ),
-              ),
-            ),
-            decoration: BoxDecoration(
-              borderRadius:  BorderRadius.circular(15),
-              color: Palette.background,
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black12,
-                  blurRadius: 3,
-                  spreadRadius:2,
-                  offset: Offset(0.5,3)
-                ),
-              ],
-            ),
-            margin: EdgeInsets.only(right: 7.0),
-          ),
+          _card(primary: primary),
           EmptySpace(height: 9.0),
           Text(
             book['title'],
-            style: TitlePrimaryText1,
+            style: primary?TitlePrimaryText1:TitleBackgroundText1,
           ),
           Text(
             "${book['page']} pages",
-            style: BodyPrimaryText1,
+            style: primary?BodyPrimaryText1:BodyBackgroundText1,
           )
         ],
       )
@@ -175,6 +183,15 @@ class Home extends StatelessWidget {
   }
 
   Widget _body() {
-    return Container();
+    return ListView(
+      shrinkWrap: true,
+      scrollDirection: Axis.vertical,
+      physics: BouncingScrollPhysics(),
+      children: [
+        _bookListHolder("Maulid's related", Dummy.bookList),
+        EmptySpace(height: 10.0),
+        _bookListHolder("Another sholawat", Dummy.bookList)
+      ]
+    );
   }
 }
