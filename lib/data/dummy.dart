@@ -2,15 +2,23 @@ class Dummy {
   static const bookList = [
     {
       "title": "Diba'",
-      "pages": 150,
+      "page": 150,
     },
     {
       "title": "Barjanzi",
-      "pages": 130,
+      "page": 130,
     },
     {
       "title": "Simtud Duror",
-      "pages": 110,
+      "page": 110,
+    },
+    {
+      "title": "Burdah",
+      "page": 110,
+    },
+    {
+      "title": "Addiyaul lami",
+      "page": 110,
     }
   ];
 }

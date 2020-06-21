@@ -16,11 +16,18 @@ const TitlePrimaryText = TextStyle(
   color: Palette.primaryText,
 );
 
-const TitleText = TextStyle(
+const TitlePrimaryText1 = TextStyle(
   fontFamily: FontNameDefault,
-  fontWeight: FontWeight.w600,
-  fontSize: 24.0,
-  color: Colors.black87,
+  fontWeight: FontWeight.w500,
+  fontSize: 13.0,
+  color: Palette.primaryText,
+);
+
+const BodyPrimaryText1 = TextStyle(
+  fontFamily: FontNameDefault,
+  fontWeight: FontWeight.w200,
+  fontSize: 12.0,
+  color: Palette.primaryText,
 );
 
 const BodyText = TextStyle(
