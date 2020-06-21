@@ -9,6 +9,13 @@ const LogoText = TextStyle(
     color: Palette.primaryText
   );
 
+const TitlePrimaryText = TextStyle(
+  fontFamily: FontNameDefault,
+  fontWeight: FontWeight.w600,
+  fontSize: 14.0,
+  color: Palette.primaryText,
+);
+
 const TitleText = TextStyle(
   fontFamily: FontNameDefault,
   fontWeight: FontWeight.w600,
