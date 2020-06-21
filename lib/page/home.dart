@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:millad/component/EmptySpace.dart';
 
 import '../data/palette.dart';
 import '../styles.dart';
 import '../data/dummy.dart';
+import '../component/EmptySpace.dart';
+import '../component/particles.dart';
 
 class Home extends StatelessWidget {
   @override
@@ -42,19 +43,24 @@ class Home extends StatelessWidget {
           BoxShadow(color: Colors.black26,blurRadius: 3,spreadRadius:2)
         ],
       ),
-      child: SafeArea(
-        child: Column(
-          children: [
-            EmptySpace(height: 50.0,),
-            _logo(),
-            EmptySpace(height: 20.0,),
-            _searchBar(),
-            EmptySpace(height: 40.0,),
-            _bookListHolder('Your recent book', Dummy.bookList, primary: true),
-            EmptySpace(height: 20.0,),
-          ],
-        )
-      ),
+      child: Stack(
+        children: [
+          Positioned.fill(child: Particles(5)),
+          SafeArea(
+            child: Column(
+              children: [
+                EmptySpace(height: 50.0,),
+                _logo(),
+                EmptySpace(height: 20.0,),
+                _searchBar(),
+                EmptySpace(height: 40.0,),
+                _bookListHolder('Your recent book', Dummy.bookList, primary: true),
+                EmptySpace(height: 20.0,),
+              ],
+            )
+          ),
+        ],
+      )
     );
   }
 
