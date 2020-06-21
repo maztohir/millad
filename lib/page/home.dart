@@ -55,12 +55,25 @@ class Home extends StatelessWidget {
                 _searchBar(),
                 EmptySpace(height: 40.0,),
                 _bookListHolder('Your recent book', Dummy.bookList, primary: true),
-                EmptySpace(height: 20.0,),
+                EmptySpace(height: 5.0,),
+                _swipableToggle(),
+                EmptySpace(height: 7.0,),
               ],
             )
           ),
         ],
       )
+    );
+  }
+
+  Widget _swipableToggle(){
+    return Container(
+      height: 4,
+      width: 25,
+      decoration: BoxDecoration(
+        borderRadius:  BorderRadius.circular(10.0),
+        color: Palette.background03,
+      ),
     );
   }
 
