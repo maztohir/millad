@@ -7,7 +7,7 @@ import './data/route.dart';
 import './data/palette.dart';
 
 import './page/home.dart';
-import './page/welcome.dart';
+import './page/book.dart';
 
 class MyApp extends StatelessWidget {
   @override
@@ -31,11 +31,11 @@ class MyApp extends StatelessWidget {
 
   RouteFactory _routes() {
     return (settings) {
-      // final Map<String, dynamic> arguments = settings.arguments;
+      final Map<String, dynamic> arguments = settings.arguments;
       Widget screen;
       switch (settings.name) {
-        case AppRoute.WELLCOME_PAGE:
-          screen = Welcome();
+        case AppRoute.BOOK_PAGE:
+          screen = Book(arguments);
           break;
         default:
           return null;

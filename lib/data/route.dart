@@ -1,3 +1,3 @@
 class AppRoute {
-  static const WELLCOME_PAGE = '/welcome';
+  static const BOOK_PAGE = '/book';
 }

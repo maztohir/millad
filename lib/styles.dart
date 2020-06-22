@@ -23,6 +23,13 @@ const TitlePrimaryText1 = TextStyle(
   color: Palette.primaryText,
 );
 
+const BodyPrimaryText = TextStyle(
+  fontFamily: FontNameDefault,
+  fontWeight: FontWeight.normal,
+  fontSize: 14.0,
+  color: Palette.primaryText01,
+);
+
 const BodyPrimaryText1 = TextStyle(
   fontFamily: FontNameDefault,
   fontWeight: FontWeight.w200,

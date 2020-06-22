@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:millad/data/route.dart';
 
 import '../data/palette.dart';
 import '../styles.dart';
@@ -25,16 +26,16 @@ class Home extends StatelessWidget {
       extendBodyBehindAppBar: true,
       body: Column(
         children: [
-          _header(),
+          _header(context),
           Expanded(
-            child: _body(),
+            child: _body(context),
           )
         ],
       )
     );
   }
 
-  Widget _header() {
+  Widget _header(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
         borderRadius:  BorderRadius.only(bottomLeft: Radius.circular(20), bottomRight: Radius.circular(20)),
@@ -54,7 +55,7 @@ class Home extends StatelessWidget {
                 EmptySpace(height: 20.0,),
                 _searchBar(),
                 EmptySpace(height: 40.0,),
-                _bookListHolder('Your recent book', Dummy.bookList, primary: true),
+                _bookListHolder(context, 'Your recent book', Dummy.bookList, primary: true),
                 EmptySpace(height: 5.0,),
                 _swipableToggle(),
                 EmptySpace(height: 7.0,),
@@ -105,7 +106,7 @@ class Home extends StatelessWidget {
     );
   }
 
-  Widget _bookListHolder(title, List<Map<String, dynamic>> bookList, {primary: false}){
+  Widget _bookListHolder(BuildContext context, String title, List<Map<String, dynamic>> bookList, {primary: false}){
     return Container(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -125,7 +126,7 @@ class Home extends StatelessWidget {
               shrinkWrap: true,
               scrollDirection: Axis.horizontal,
               physics: BouncingScrollPhysics(),
-              children: bookList.map((book) => _bookCard(book, primary: primary)).toList(),
+              children: bookList.map((book) => _bookCard(context, book, primary: primary)).toList(),
             )
           )
         ]
@@ -133,13 +134,13 @@ class Home extends StatelessWidget {
     );
   }
 
-  Widget _card({primary: false}) {
+  Widget _card(BuildContext context, Map<String, dynamic> book, {primary: false}) {
     return Container(
       child: Material(
         color: Colors.transparent,
         child: InkWell(
           borderRadius: BorderRadius.circular(15.0),
-          onTap: () => {},
+          onTap: () => Navigator.pushNamed(context, AppRoute.BOOK_PAGE, arguments: book),
           child: Container(
             height: 140.0,
             width: 100.0,
@@ -162,12 +163,12 @@ class Home extends StatelessWidget {
     );
   }
 
-  Widget _bookCard(book, {primary: false}){
+  Widget _bookCard(BuildContext context, Map<String, dynamic> book, {primary: false}){
     return Container(
       padding: EdgeInsets.only(left: 5.0, top: 5.0, bottom: 5.0),
       child: Column(
         children: [
-          _card(primary: primary),
+          _card(context, book, primary: primary),
           EmptySpace(height: 9.0),
           Text(
             book['title'],
@@ -201,15 +202,15 @@ class Home extends StatelessWidget {
     );
   }
 
-  Widget _body() {
+  Widget _body(BuildContext context) {
     return ListView(
       shrinkWrap: true,
       scrollDirection: Axis.vertical,
       physics: BouncingScrollPhysics(),
       children: [
-        _bookListHolder("Maulid's related", Dummy.bookList),
+        _bookListHolder(context, "Maulid's related", Dummy.bookList),
         EmptySpace(height: 10.0),
-        _bookListHolder("Another sholawat", Dummy.bookList)
+        _bookListHolder(context, "Another sholawat", Dummy.bookList)
       ]
     );
   }
