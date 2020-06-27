@@ -13,20 +13,20 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion(
-      child: MaterialApp(
-        theme: _themeData(),
-        home: Home(),
-        onGenerateRoute: _routes(),
-      ),
-      value: SystemUiOverlayStyle.dark.copyWith(statusBarColor: Colors.transparent,)
-    );
+        child: MaterialApp(
+          theme: _themeData(),
+          home: Home(),
+          onGenerateRoute: _routes(),
+        ),
+        value: SystemUiOverlayStyle.dark.copyWith(
+          statusBarColor: Colors.transparent,
+        ));
   }
 
-  static ThemeData _themeData(){
+  static ThemeData _themeData() {
     return ThemeData(
-      textTheme: TextTheme(bodyText2: BodyText),
-      primaryColor: Palette.primary
-    );
+        textTheme: TextTheme(bodyText2: BodyText),
+        primaryColor: Palette.primary);
   }
 
   RouteFactory _routes() {

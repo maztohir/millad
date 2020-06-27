@@ -4,10 +4,10 @@ import 'package:millad/data/palette.dart';
 const String FontNameDefault = 'Source Sans Pro';
 
 const LogoText = TextStyle(
-    fontSize: 19.0,
-    fontStyle: FontStyle.italic,
-    color: Palette.primaryText
-  );
+  fontSize: 19.0,
+  fontStyle: FontStyle.italic,
+  color: Palette.primaryText,
+);
 
 const TitlePrimaryText = TextStyle(
   fontFamily: FontNameDefault,

@@ -12,4 +12,4 @@ class Palette {
   static const Color background03 = Colors.white54;
   static const Color background04 = Colors.white38;
   static const Color backgroundText = Color(0xFF434343);
-} 
+}
