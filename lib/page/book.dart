@@ -179,29 +179,47 @@ class Book extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
-            padding: EdgeInsets.only(left: 30.0, top: 30.0),
-            child: Text(
-              'Contents',
-              style: TitleBackgroundText,
-            )),
+          padding: EdgeInsets.only(left: 30.0, top: 30.0),
+          child: Text(
+            'Contents',
+            style: TitleBackgroundText,
+          ),
+        ),
         Expanded(
           child: ListView(
-              shrinkWrap: true,
-              scrollDirection: Axis.vertical,
-              physics: BouncingScrollPhysics(),
-              children: contents
-                  .map((content) => _content(context, content))
-                  .toList()),
-        )
+            shrinkWrap: true,
+            scrollDirection: Axis.vertical,
+            physics: BouncingScrollPhysics(),
+            children:
+                contents.map((content) => _content(context, content)).toList(),
+          ),
+        ),
       ],
     );
   }
 
-  Widget _content(BuildContext context, String title) {
-    return Container(
-        child: Text(
-      title,
-      style: BodyBackgroundText1,
-    ));
+  Widget _content(BuildContext context, String contentTitle) {
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: () => Navigator.pushNamed(context, AppRoute.BOOK_CONTENT_PAGE,
+            arguments: contentTitle),
+        child: Container(
+          padding: EdgeInsets.symmetric(horizontal: 30.0),
+          child: Container(
+            padding: EdgeInsets.symmetric(vertical: 25.0),
+            decoration: BoxDecoration(
+              border: Border(
+                bottom: BorderSide(width: 0.3, color: Palette.backgroundText04),
+              ),
+            ),
+            child: Text(
+              contentTitle,
+              style: BodyBackgroundText,
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }

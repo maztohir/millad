@@ -8,6 +8,7 @@ import './data/palette.dart';
 
 import './page/home.dart';
 import './page/book.dart';
+import './page/content.dart';
 
 class MyApp extends StatelessWidget {
   @override
@@ -25,7 +26,7 @@ class MyApp extends StatelessWidget {
 
   static ThemeData _themeData() {
     return ThemeData(
-        textTheme: TextTheme(bodyText2: BodyText),
+        textTheme: TextTheme(bodyText2: BodyBackgroundText),
         primaryColor: Palette.primary);
   }
 
@@ -36,6 +37,9 @@ class MyApp extends StatelessWidget {
       switch (settings.name) {
         case AppRoute.BOOK_PAGE:
           screen = Book(arguments);
+          break;
+        case AppRoute.BOOK_CONTENT_PAGE:
+          screen = Content(arguments);
           break;
         default:
           return null;

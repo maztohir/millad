@@ -51,16 +51,16 @@ const TitleBackgroundText1 = TextStyle(
   color: Palette.backgroundText,
 );
 
+const BodyBackgroundText = TextStyle(
+  fontFamily: FontNameDefault,
+  fontWeight: FontWeight.normal,
+  fontSize: 14.0,
+  color: Palette.backgroundText,
+);
+
 const BodyBackgroundText1 = TextStyle(
   fontFamily: FontNameDefault,
   fontWeight: FontWeight.w200,
   fontSize: 12.0,
   color: Palette.backgroundText,
-);
-
-const BodyText = TextStyle(
-  fontFamily: FontNameDefault,
-  fontWeight: FontWeight.normal,
-  fontSize: 14.0,
-  color: Colors.black87,
 );
