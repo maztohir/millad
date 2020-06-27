@@ -9,6 +9,13 @@ const LogoText = TextStyle(
   color: Palette.primaryText,
 );
 
+const AppBarText = TextStyle(
+  fontSize: 18.0,
+  fontFamily: FontNameDefault,
+  fontWeight: FontWeight.w400,
+  color: Palette.primaryText,
+);
+
 const TitlePrimaryText = TextStyle(
   fontFamily: FontNameDefault,
   fontWeight: FontWeight.w600,

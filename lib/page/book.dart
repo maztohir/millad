@@ -203,7 +203,7 @@ class Book extends StatelessWidget {
       color: Colors.transparent,
       child: InkWell(
         onTap: () => Navigator.pushNamed(context, AppRoute.BOOK_CONTENT_PAGE,
-            arguments: contentTitle),
+            arguments: {'title': contentTitle}),
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 30.0),
           child: Container(

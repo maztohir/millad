@@ -33,12 +33,12 @@ class Dummy {
   ];
 
   static const contents = [
-    "1. Ya Rabbi Sholli ‘Ala Muhammad",
-    "2. Inna Fatahna",
-    "3. Ya Rasulallah Salamun Alaik",
-    "4. Alhamdulillah Alqowiyil Ghalik",
-    "5. Qiila Hua Adam",
-    "6. Yub’atsu Min Tihama",
-    "7. Tsumma Aruddu Minal ‘Ars"
+    "Ya Rabbi Sholli ‘Ala Muhammad",
+    "Inna Fatahna",
+    "Ya Rasulallah Salamun Alaik",
+    "Alhamdulillah Alqowiyil Ghalik",
+    "Qiila Hua Adam",
+    "Yub’atsu Min Tihama",
+    "Tsumma Aruddu Minal ‘Ars"
   ];
 }
