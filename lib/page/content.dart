@@ -1,9 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:millad/data/dummy.dart';
 import 'package:millad/data/route.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 import '../data/palette.dart';
 import '../styles.dart';
@@ -12,6 +15,7 @@ import '../component/particles.dart';
 
 class Content extends StatelessWidget {
   final Map<String, dynamic> content;
+  WebViewController _controller;
 
   Content(this.content);
 
@@ -180,17 +184,27 @@ class Content extends StatelessWidget {
   }
 
   Widget _body(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Container(
-          padding: EdgeInsets.only(left: 30.0, top: 30.0),
-          child: Text(
-            'Contents',
-            style: TitleBackgroundText,
-          ),
-        ),
-      ],
+    return Container(
+      padding: EdgeInsets.all(30.0),
+      child: WebView(
+        initialUrl: 'about:blank',
+        onWebViewCreated: (WebViewController webViewController) {
+          _controller = webViewController;
+          _loadHtmlFromAssets();
+        },
+      ),
+    );
+  }
+
+  _loadHtmlFromAssets() async {
+    String fileText =
+        await rootBundle.loadString('assets/books/sample/welcome.html');
+    _controller.loadUrl(
+      Uri.dataFromString(
+        fileText,
+        mimeType: 'text/html',
+        encoding: Encoding.getByName('utf-8'),
+      ).toString(),
     );
   }
 }
