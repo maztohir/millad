@@ -1,23 +1,33 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:millad/data/dummy.dart';
 import 'package:millad/data/route.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 
 import '../data/palette.dart';
 import '../styles.dart';
 import '../component/EmptySpace.dart';
 import '../component/particles.dart';
 
-class Content extends StatelessWidget {
+class Content extends StatefulWidget {
   final Map<String, dynamic> content;
-  WebViewController _controller;
 
   Content(this.content);
+
+  @override
+  ContentState createState() => ContentState();
+}
+
+class ContentState extends State<Content> {
+  String _content = 'Loading...';
+
+  @override
+  void initState() {
+    _loadHtml();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +63,7 @@ class Content extends StatelessWidget {
         ),
         color: Palette.primary,
         boxShadow: [
-          BoxShadow(color: Colors.black26, blurRadius: 3, spreadRadius: 2)
+          BoxShadow(color: Colors.black12, blurRadius: 3, spreadRadius: 2)
         ],
       ),
       child: Stack(
@@ -69,7 +79,7 @@ class Content extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 EmptySpace(
-                  height: 20.0,
+                  height: 10.0,
                 ),
                 _appBarContent(context),
                 EmptySpace(
@@ -92,7 +102,7 @@ class Content extends StatelessWidget {
         ),
         color: Palette.primary,
         boxShadow: [
-          BoxShadow(color: Colors.black26, blurRadius: 3, spreadRadius: 2)
+          BoxShadow(color: Colors.black12, blurRadius: 3, spreadRadius: 2)
         ],
       ),
       child: Stack(
@@ -136,7 +146,7 @@ class Content extends StatelessWidget {
   }
 
   Widget _appBarContent(BuildContext context) {
-    String contentTitle = content['title'] ?? '';
+    String contentTitle = widget.content['title'] ?? '';
     return Container(
       padding: EdgeInsets.only(left: 17.0),
       child: Row(
@@ -154,6 +164,9 @@ class Content extends StatelessWidget {
                 ),
               ),
             ),
+          ),
+          EmptySpace(
+            width: 5.0,
           ),
           Text(
             contentTitle,
@@ -186,25 +199,20 @@ class Content extends StatelessWidget {
   Widget _body(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(30.0),
-      child: WebView(
-        initialUrl: 'about:blank',
-        onWebViewCreated: (WebViewController webViewController) {
-          _controller = webViewController;
-          _loadHtmlFromAssets();
-        },
+      child: Html(
+        data: _content,
+        defaultTextStyle: ArabicContentText,
+        customTextAlign: (_) => TextAlign.center,
       ),
     );
   }
 
-  _loadHtmlFromAssets() async {
+  Future<void> _loadHtml() async {
+    print('Opening file..');
     String fileText =
-        await rootBundle.loadString('assets/books/sample/welcome.html');
-    _controller.loadUrl(
-      Uri.dataFromString(
-        fileText,
-        mimeType: 'text/html',
-        encoding: Encoding.getByName('utf-8'),
-      ).toString(),
-    );
+        await rootBundle.loadString('assets/books/sample/web.html');
+    setState(() {
+      _content = fileText;
+    });
   }
 }

@@ -71,3 +71,10 @@ const BodyBackgroundText1 = TextStyle(
   fontSize: 12.0,
   color: Palette.backgroundText,
 );
+
+const ArabicContentText = TextStyle(
+  fontFamily: FontNameDefault,
+  fontWeight: FontWeight.normal,
+  fontSize: 18.0,
+  color: Palette.backgroundText,
+);

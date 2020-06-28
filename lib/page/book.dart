@@ -46,7 +46,7 @@ class Book extends StatelessWidget {
               bottomRight: Radius.circular(20)),
           color: Palette.primary,
           boxShadow: [
-            BoxShadow(color: Colors.black26, blurRadius: 3, spreadRadius: 2)
+            BoxShadow(color: Colors.black26, blurRadius: 3, spreadRadius: 1)
           ],
         ),
         child: Stack(
