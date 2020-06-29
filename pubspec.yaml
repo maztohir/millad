@@ -51,7 +51,6 @@ flutter:
   assets:
     - assets/images/
     - assets/books/sample/web.html
-    - assets/books/sample/table.html
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

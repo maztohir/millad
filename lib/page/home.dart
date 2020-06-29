@@ -13,6 +13,10 @@ import '../component/particles.dart';
 class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+    ));
+
     return Scaffold(
         backgroundColor: Palette.background,
         appBar: PreferredSize(

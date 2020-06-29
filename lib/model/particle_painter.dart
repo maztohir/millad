@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:millad/data/palette.dart';
 
 import './particle_model.dart';
 
@@ -10,7 +11,7 @@ class ParticlePainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final paint = Paint()..color = Colors.white.withAlpha(50);
+    final paint = Paint()..color = Palette.backgroundParticle;
 
     particles.forEach((particle) {
       var progress = particle.animationProgress.progress(time);

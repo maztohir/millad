@@ -3,8 +3,6 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_html/flutter_html.dart';
-import 'package:millad/data/dummy.dart';
-import 'package:millad/data/route.dart';
 
 import '../data/palette.dart';
 import '../styles.dart';
@@ -20,13 +18,28 @@ class Content extends StatefulWidget {
   ContentState createState() => ContentState();
 }
 
-class ContentState extends State<Content> {
+class ContentState extends State<Content> with SingleTickerProviderStateMixin {
+  AnimationController _animationController;
   String _content = 'Loading...';
 
   @override
   void initState() {
     _loadHtml();
+
+    _animationController = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 200),
+    );
+
     super.initState();
+  }
+
+  _hideStatusBar() {
+    // SystemChrome.setEnabledSystemUIOverlays([]);
+  }
+
+  _showStatusBar() {
+    SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
   }
 
   @override
@@ -42,14 +55,22 @@ class ContentState extends State<Content> {
         ),
       ),
       extendBodyBehindAppBar: true,
-      body: Column(
-        children: [
-          _header(context),
-          Expanded(
-            child: _body(context),
-          ),
-          _footer(context)
-        ],
+      body: AnimatedBuilder(
+        animation: _animationController,
+        builder: (context, build) => Stack(
+          children: [
+            _body(context),
+            Transform.translate(
+              offset: Offset(0, -_animationController.value * 104),
+              child: _header(context),
+            ),
+            // _header(context),
+            Transform.translate(
+              offset: Offset(0, _animationController.value * 64),
+              child: _footer(context),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -75,17 +96,9 @@ class ContentState extends State<Content> {
             ),
           ),
           SafeArea(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                EmptySpace(
-                  height: 10.0,
-                ),
-                _appBarContent(context),
-                EmptySpace(
-                  height: 10.0,
-                ),
-              ],
+            child: Container(
+              child: _appBarContent(context),
+              padding: EdgeInsets.symmetric(vertical: 10.0),
             ),
           ),
         ],
@@ -95,37 +108,41 @@ class ContentState extends State<Content> {
 
   Widget _footer(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(20),
-          topRight: Radius.circular(20),
+      alignment: Alignment.bottomCenter,
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(20),
+            topRight: Radius.circular(20),
+          ),
+          color: Palette.primary,
+          boxShadow: [
+            BoxShadow(color: Colors.black12, blurRadius: 3, spreadRadius: 2)
+          ],
         ),
-        color: Palette.primary,
-        boxShadow: [
-          BoxShadow(color: Colors.black12, blurRadius: 3, spreadRadius: 2)
-        ],
-      ),
-      child: Stack(
-        children: [
-          Positioned.fill(
-            child: Particles(
-              1,
-              minDuration: 40000,
+        child: Stack(
+          children: [
+            Positioned.fill(
+              child: Particles(
+                1,
+                minDuration: 40000,
+              ),
             ),
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              EmptySpace(
-                height: 20.0,
-              ),
-              _pageCounter(context),
-              EmptySpace(
-                height: 15.0,
-              ),
-            ],
-          ),
-        ],
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                EmptySpace(
+                  height: 20.0,
+                ),
+                _pageCounter(context),
+                EmptySpace(
+                  height: 15.0,
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -197,12 +214,31 @@ class ContentState extends State<Content> {
   }
 
   Widget _body(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(30.0),
-      child: Html(
-        data: _content,
-        defaultTextStyle: ArabicContentText,
-        customTextAlign: (_) => TextAlign.center,
+    return GestureDetector(
+      onTap: () {
+        if (_animationController.isCompleted) {
+          _animationController.reverse();
+          print('hahahah 1');
+          _showStatusBar();
+        } else {
+          _animationController.forward();
+          print('hahahah 2');
+          _hideStatusBar();
+        }
+      },
+      child: Container(
+        color: Palette.background,
+        height: double.infinity,
+        width: double.infinity,
+        child: SingleChildScrollView(
+          child: Html(
+            padding: EdgeInsets.only(
+                top: 105.0, left: 30.0, right: 30.0, bottom: 30.0),
+            data: _content,
+            defaultTextStyle: ArabicContentText,
+            customTextAlign: (_) => TextAlign.center,
+          ),
+        ),
       ),
     );
   }

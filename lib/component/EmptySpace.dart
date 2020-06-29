@@ -13,11 +13,17 @@ class EmptySpace extends StatelessWidget {
         height: height,
       );
     } else if (width != null) {
-      return Container(width: width);
+      return Padding(
+        padding: EdgeInsets.only(left: width),
+      );
     } else if (height != null) {
-      return Container(height: height);
+      return Padding(
+        padding: EdgeInsets.only(top: height),
+      );
     } else {
-      return Expanded(flex: 1, child: Container());
+      return Expanded(
+        child: Padding(padding: EdgeInsets.all(0.0)),
+      );
     }
   }
 }

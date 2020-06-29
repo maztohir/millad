@@ -9,7 +9,7 @@ import '../model/particle_painter.dart';
 class Particles extends StatefulWidget {
   final int numberOfParticles;
   int minDuration;
-  Particles(this.numberOfParticles, {this.minDuration = 8000});
+  Particles(this.numberOfParticles, {this.minDuration = 10000});
 
   @override
   _ParticlesState createState() => _ParticlesState();
