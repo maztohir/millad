@@ -23,8 +23,7 @@ class Content extends StatefulWidget {
 
 class ContentState extends State<Content> with SingleTickerProviderStateMixin {
   AnimationController _animationController;
-  String _content = 'Loading...';
-
+  PageController _pageController;
   int activeIndex;
 
   @override
@@ -32,8 +31,9 @@ class ContentState extends State<Content> with SingleTickerProviderStateMixin {
     print("initial index is ${widget.initialIndex}");
     this.activeIndex = widget.initialIndex;
 
-    _loadHtml();
-
+    _pageController = PageController(
+      initialPage: widget.initialIndex,
+    );
     _animationController = AnimationController(
       vsync: this,
       duration: Duration(milliseconds: 200),
@@ -234,32 +234,49 @@ class ContentState extends State<Content> with SingleTickerProviderStateMixin {
           _hideStatusBar();
         }
       },
-      child: Container(
-        color: Palette.background,
-        height: double.infinity,
-        width: double.infinity,
-        child: SingleChildScrollView(
-          child: Html(
-            padding: EdgeInsets.only(
-                top: 105.0, left: 30.0, right: 30.0, bottom: 30.0),
-            data: _content,
-            defaultTextStyle: ArabicContentText,
-            customTextAlign: (_) => TextAlign.center,
-          ),
-        ),
+      child: PageView(
+        controller: _pageController,
+        onPageChanged: (pageIndex) {
+          setState(() {
+            this.activeIndex = pageIndex;
+          });
+        },
+        children: widget.book.contents
+            .map((content) => _bodyContentBuilder(context, content))
+            .toList(),
       ),
     );
   }
 
-  Future<void> _loadHtml() async {
-    print('opening..');
-    print(widget.book);
-    print(this.activeIndex);
-    String contentUri = widget.book.contents[this.activeIndex].contentUri;
-    print('file..$contentUri');
-    String fileText = await rootBundle.loadString(contentUri);
-    setState(() {
-      _content = fileText;
-    });
+  Widget _bodyContentBuilder(BuildContext context, ContentModel content) {
+    return FutureBuilder(
+        future: rootBundle.loadString(content.contentUri),
+        builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: Text('Please wait its loading...'));
+          } else {
+            if (snapshot.hasError)
+              return Center(child: Text('Error: ${snapshot.error}'));
+            else
+              return _bodyContent(context, snapshot.data);
+          }
+        });
+  }
+
+  Widget _bodyContent(BuildContext context, String content) {
+    return Container(
+      color: Palette.background,
+      height: double.infinity,
+      width: double.infinity,
+      child: SingleChildScrollView(
+        child: Html(
+          padding: EdgeInsets.only(
+              top: 105.0, left: 30.0, right: 30.0, bottom: 30.0),
+          data: content,
+          defaultTextStyle: ArabicContentText,
+          customTextAlign: (_) => TextAlign.center,
+        ),
+      ),
+    );
   }
 }
