@@ -2,16 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:millad/data/dummy.dart';
-import 'package:millad/data/route.dart';
 
 import '../data/palette.dart';
+import '../data/route.dart';
+import '../model/book.dart';
+import '../model/content.dart';
 import '../styles.dart';
 import '../component/EmptySpace.dart';
 import '../component/particles.dart';
 
 class Book extends StatelessWidget {
-  final Map<String, dynamic> book;
+  final BookModel book;
 
   Book(this.book);
 
@@ -158,7 +159,7 @@ class Book extends StatelessWidget {
         EmptySpace(
           width: 10.0,
         ),
-        Text(book['title'], style: LogoText),
+        Text(this.book.title, style: LogoText),
       ]),
     );
   }
@@ -167,14 +168,14 @@ class Book extends StatelessWidget {
     return Container(
       padding: EdgeInsets.only(left: 30.0, right: 30.0),
       child: Text(
-        book['description'],
+        this.book.description,
         style: BodyPrimaryText,
       ),
     );
   }
 
   Widget _body(BuildContext context) {
-    List<String> contents = Dummy.contents;
+    List<ContentModel> contents = this.book.contents;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -198,12 +199,15 @@ class Book extends StatelessWidget {
     );
   }
 
-  Widget _content(BuildContext context, String contentTitle) {
+  Widget _content(BuildContext context, ContentModel content) {
     return Material(
       color: Colors.transparent,
       child: InkWell(
         onTap: () => Navigator.pushNamed(context, AppRoute.BOOK_CONTENT_PAGE,
-            arguments: {'title': contentTitle}),
+            arguments: {
+              'book': this.book,
+              'index': this.book.contents.indexOf(content)
+            }),
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 30.0),
           child: Container(
@@ -214,7 +218,7 @@ class Book extends StatelessWidget {
               ),
             ),
             child: Text(
-              contentTitle,
+              content.title,
               style: BodyBackgroundText,
             ),
           ),

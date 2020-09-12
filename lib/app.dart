@@ -36,10 +36,10 @@ class MyApp extends StatelessWidget {
       Widget screen;
       switch (settings.name) {
         case AppRoute.BOOK_PAGE:
-          screen = Book(arguments);
+          screen = Book(arguments['book']);
           break;
         case AppRoute.BOOK_CONTENT_PAGE:
-          screen = Content(arguments);
+          screen = Content(arguments['book'], arguments['index']);
           break;
         default:
           return null;

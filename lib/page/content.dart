@@ -5,14 +5,17 @@ import 'package:flutter_svg/svg.dart';
 import 'package:flutter_html/flutter_html.dart';
 
 import '../data/palette.dart';
+import '../model/book.dart';
+import '../model/content.dart';
 import '../styles.dart';
 import '../component/EmptySpace.dart';
 import '../component/particles.dart';
 
 class Content extends StatefulWidget {
-  final Map<String, dynamic> content;
+  final BookModel book;
+  final int initialIndex;
 
-  Content(this.content);
+  Content(this.book, this.initialIndex);
 
   @override
   ContentState createState() => ContentState();
@@ -22,8 +25,13 @@ class ContentState extends State<Content> with SingleTickerProviderStateMixin {
   AnimationController _animationController;
   String _content = 'Loading...';
 
+  int activeIndex;
+
   @override
   void initState() {
+    print("initial index is ${widget.initialIndex}");
+    this.activeIndex = widget.initialIndex;
+
     _loadHtml();
 
     _animationController = AnimationController(
@@ -148,10 +156,11 @@ class ContentState extends State<Content> with SingleTickerProviderStateMixin {
   }
 
   Widget _pageCounter(BuildContext context) {
+    String pageLabel = "${this.activeIndex + 1} / ${widget.book.totalPage}";
     return Container(
       alignment: Alignment.center,
       child: Text(
-        '001 / 200',
+        pageLabel,
         style: TextStyle(
           fontFamily: FontNameDefault,
           fontWeight: FontWeight.w500,
@@ -163,7 +172,8 @@ class ContentState extends State<Content> with SingleTickerProviderStateMixin {
   }
 
   Widget _appBarContent(BuildContext context) {
-    String contentTitle = widget.content['title'] ?? '';
+    ContentModel content = widget.book.contents[this.activeIndex];
+    String contentTitle = content.title ?? '';
     return Container(
       padding: EdgeInsets.only(left: 17.0),
       child: Row(
@@ -218,11 +228,9 @@ class ContentState extends State<Content> with SingleTickerProviderStateMixin {
       onTap: () {
         if (_animationController.isCompleted) {
           _animationController.reverse();
-          print('hahahah 1');
           _showStatusBar();
         } else {
           _animationController.forward();
-          print('hahahah 2');
           _hideStatusBar();
         }
       },
@@ -244,9 +252,12 @@ class ContentState extends State<Content> with SingleTickerProviderStateMixin {
   }
 
   Future<void> _loadHtml() async {
-    print('Opening file..');
-    String fileText =
-        await rootBundle.loadString('assets/books/sample/web.html');
+    print('opening..');
+    print(widget.book);
+    print(this.activeIndex);
+    String contentUri = widget.book.contents[this.activeIndex].contentUri;
+    print('file..$contentUri');
+    String fileText = await rootBundle.loadString(contentUri);
     setState(() {
       _content = fileText;
     });

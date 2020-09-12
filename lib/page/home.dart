@@ -3,10 +3,11 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:millad/data/route.dart';
+import 'package:millad/model/book.dart';
 
 import '../data/palette.dart';
 import '../styles.dart';
-import '../data/dummy.dart';
+import '../data/data.dart';
 import '../component/EmptySpace.dart';
 import '../component/particles.dart';
 
@@ -16,6 +17,9 @@ class Home extends StatelessWidget {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
     ));
+
+    BookData bookData = BookData();
+    print("re-init Data");
 
     return Scaffold(
         backgroundColor: Palette.background,
@@ -30,15 +34,15 @@ class Home extends StatelessWidget {
         extendBodyBehindAppBar: true,
         body: Column(
           children: [
-            _header(context),
+            _header(context, bookData),
             Expanded(
-              child: _body(context),
+              child: _body(context, bookData),
             )
           ],
         ));
   }
 
-  Widget _header(BuildContext context) {
+  Widget _header(BuildContext context, BookData bookData) {
     return Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.only(
@@ -66,7 +70,8 @@ class Home extends StatelessWidget {
                 EmptySpace(
                   height: 40.0,
                 ),
-                _bookListHolder(context, 'Your recent book', Dummy.bookList,
+                _bookListHolder(
+                    context, 'Your recent book', bookData.getBooks(),
                     primary: true),
                 EmptySpace(
                   height: 5.0,
@@ -122,7 +127,7 @@ class Home extends StatelessWidget {
   }
 
   Widget _bookListHolder(
-      BuildContext context, String title, List<Map<String, dynamic>> bookList,
+      BuildContext context, String title, List<BookModel> bookList,
       {primary: false}) {
     return Container(
       child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
@@ -138,9 +143,9 @@ class Home extends StatelessWidget {
           height: 10.0,
         ),
         Container(
-            padding: EdgeInsets.only(left: 23.0),
             height: 200,
             child: ListView(
+              padding: EdgeInsets.symmetric(horizontal: 23.0),
               shrinkWrap: true,
               scrollDirection: Axis.horizontal,
               physics: BouncingScrollPhysics(),
@@ -152,15 +157,14 @@ class Home extends StatelessWidget {
     );
   }
 
-  Widget _card(BuildContext context, Map<String, dynamic> book,
-      {primary: false}) {
+  Widget _card(BuildContext context, BookModel book, {primary: false}) {
     return Container(
       child: Material(
         color: Colors.transparent,
         child: InkWell(
           borderRadius: BorderRadius.circular(15.0),
-          onTap: () =>
-              Navigator.pushNamed(context, AppRoute.BOOK_PAGE, arguments: book),
+          onTap: () => Navigator.pushNamed(context, AppRoute.BOOK_PAGE,
+              arguments: {'book': book}),
           child: Container(
             height: 140.0,
             width: 100.0,
@@ -182,8 +186,7 @@ class Home extends StatelessWidget {
     );
   }
 
-  Widget _bookCard(BuildContext context, Map<String, dynamic> book,
-      {primary: false}) {
+  Widget _bookCard(BuildContext context, BookModel book, {primary: false}) {
     return Container(
         padding: EdgeInsets.only(left: 5.0, top: 5.0, bottom: 5.0),
         child: Column(
@@ -191,11 +194,11 @@ class Home extends StatelessWidget {
             _card(context, book, primary: primary),
             EmptySpace(height: 9.0),
             Text(
-              book['title'],
+              book.title,
               style: primary ? TitlePrimaryText1 : TitleBackgroundText1,
             ),
             Text(
-              "${book['page']} pages",
+              "${book.totalPage} pages",
               style: primary ? BodyPrimaryText1 : BodyBackgroundText1,
             )
           ],
@@ -217,15 +220,15 @@ class Home extends StatelessWidget {
     );
   }
 
-  Widget _body(BuildContext context) {
+  Widget _body(BuildContext context, BookData bookData) {
     return ListView(
         shrinkWrap: true,
         scrollDirection: Axis.vertical,
         physics: BouncingScrollPhysics(),
         children: [
-          _bookListHolder(context, "Maulid's related", Dummy.bookList),
+          _bookListHolder(context, "Maulid's related", bookData.getBooks()),
           EmptySpace(height: 10.0),
-          _bookListHolder(context, "Another sholawat", Dummy.bookList)
+          _bookListHolder(context, "Another sholawat", bookData.getBooks())
         ]);
   }
 }
