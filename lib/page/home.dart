@@ -19,71 +19,71 @@ class Home extends StatelessWidget {
     ));
 
     BookData bookData = BookData();
-    print("re-init Data");
 
     return Scaffold(
-        backgroundColor: Palette.background,
-        appBar: PreferredSize(
-          preferredSize: Size.fromHeight(0.0),
-          child: AppBar(
-            elevation: 0,
-            backgroundColor: Colors.transparent,
-            brightness: Brightness.dark,
-          ),
+      backgroundColor: Palette.background,
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(0.0),
+        child: AppBar(
+          elevation: 0,
+          backgroundColor: Colors.transparent,
+          brightness: Brightness.dark,
         ),
-        extendBodyBehindAppBar: true,
-        body: Column(
-          children: [
-            _header(context, bookData),
-            Expanded(
-              child: _body(context, bookData),
-            )
-          ],
-        ));
+      ),
+      extendBodyBehindAppBar: true,
+      body: Column(
+        children: [
+          _header(context, bookData),
+          Expanded(
+            child: _body(context, bookData),
+          )
+        ],
+      ),
+    );
   }
 
   Widget _header(BuildContext context, BookData bookData) {
     return Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(20),
-              bottomRight: Radius.circular(20)),
-          color: Palette.primary,
-          boxShadow: [
-            BoxShadow(color: Colors.black26, blurRadius: 3, spreadRadius: 1)
-          ],
-        ),
-        child: Stack(
-          children: [
-            Positioned.fill(child: Particles(5)),
-            SafeArea(
-                child: Column(
-              children: [
-                EmptySpace(
-                  height: 50.0,
-                ),
-                _logo(),
-                EmptySpace(
-                  height: 20.0,
-                ),
-                _searchBar(),
-                EmptySpace(
-                  height: 40.0,
-                ),
-                _bookListHolder(
-                    context, 'Your recent book', bookData.getBooks(),
-                    primary: true),
-                EmptySpace(
-                  height: 5.0,
-                ),
-                _swipableToggle(),
-                EmptySpace(
-                  height: 7.0,
-                ),
-              ],
-            )),
-          ],
-        ));
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.only(
+            bottomLeft: Radius.circular(20), bottomRight: Radius.circular(20)),
+        color: Palette.primary,
+        boxShadow: [
+          BoxShadow(color: Colors.black26, blurRadius: 3, spreadRadius: 1)
+        ],
+      ),
+      child: Stack(
+        children: [
+          Positioned.fill(child: Particles(5)),
+          SafeArea(
+              child: Column(
+            children: [
+              EmptySpace(
+                height: 50.0,
+              ),
+              _logo(),
+              EmptySpace(
+                height: 20.0,
+              ),
+              _searchBar(),
+              EmptySpace(
+                height: 40.0,
+              ),
+              _bookListHolder(
+                  context, 'Your recent book', bookData.getBooks()..shuffle(),
+                  primary: true),
+              EmptySpace(
+                height: 5.0,
+              ),
+              _swipableToggle(),
+              EmptySpace(
+                height: 7.0,
+              ),
+            ],
+          )),
+        ],
+      ),
+    );
   }
 
   Widget _swipableToggle() {
@@ -173,10 +173,16 @@ class Home extends StatelessWidget {
       ),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
-        color: primary ? Palette.background : Palette.primary01,
+        // image: new DecorationImage(
+        //   image: new ExactAssetImage('assets/images/cover/diba.jpg'),
+        //   fit: BoxFit.cover,
+        // ),
+        color: book.color,
         boxShadow: [
           BoxShadow(
-              color: Colors.black12,
+              color: primary
+                  ? Colors.black.withAlpha(20)
+                  : book.color.withAlpha(60),
               blurRadius: 3,
               spreadRadius: 2,
               offset: Offset(0.5, 3)),
@@ -188,21 +194,22 @@ class Home extends StatelessWidget {
 
   Widget _bookCard(BuildContext context, BookModel book, {primary: false}) {
     return Container(
-        padding: EdgeInsets.only(left: 5.0, top: 5.0, bottom: 5.0),
-        child: Column(
-          children: [
-            _card(context, book, primary: primary),
-            EmptySpace(height: 9.0),
-            Text(
-              book.title,
-              style: primary ? TitlePrimaryText1 : TitleBackgroundText1,
-            ),
-            Text(
-              "${book.totalPage} pages",
-              style: primary ? BodyPrimaryText1 : BodyBackgroundText1,
-            )
-          ],
-        ));
+      padding: EdgeInsets.only(left: 5.0, top: 5.0, bottom: 5.0),
+      child: Column(
+        children: [
+          _card(context, book, primary: primary),
+          EmptySpace(height: 9.0),
+          Text(
+            book.title,
+            style: primary ? TitlePrimaryText1 : TitleBackgroundText1,
+          ),
+          Text(
+            "${book.totalPage} pages",
+            style: primary ? BodyPrimaryText1 : BodyBackgroundText1,
+          )
+        ],
+      ),
+    );
   }
 
   Widget _logo() {
@@ -222,13 +229,15 @@ class Home extends StatelessWidget {
 
   Widget _body(BuildContext context, BookData bookData) {
     return ListView(
-        shrinkWrap: true,
-        scrollDirection: Axis.vertical,
-        physics: BouncingScrollPhysics(),
-        children: [
-          _bookListHolder(context, "Maulid's related", bookData.getBooks()),
-          EmptySpace(height: 10.0),
-          _bookListHolder(context, "Another sholawat", bookData.getBooks())
-        ]);
+      shrinkWrap: true,
+      scrollDirection: Axis.vertical,
+      physics: BouncingScrollPhysics(),
+      children: [
+        _bookListHolder(context, "Maulid's related", bookData.getBooks()),
+        EmptySpace(height: 10.0),
+        _bookListHolder(
+            context, "Another sholawat", bookData.getBooks()..shuffle())
+      ],
+    );
   }
 }

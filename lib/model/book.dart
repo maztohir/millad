@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 import 'content.dart';
 
 class BookModel {
@@ -5,10 +7,11 @@ class BookModel {
   String description;
   String id;
   int totalPage;
+  Color color;
 
   List<ContentModel> contents;
 
-  BookModel(this.title, this.description) {
+  BookModel(this.title, this.description, this.color) {
     this.id = title.replaceAll(" ", "").toLowerCase();
   }
 
