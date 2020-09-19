@@ -1,14 +1,11 @@
-import 'package:millad/data/palette.dart';
-
 import '../model/content.dart';
 import '../model/book.dart';
 
 class BookData {
   List<BookModel> getBooks() {
-    BookModel diba = BookModel(
-        "Diba'",
+    BookModel diba = BookModel(0, "Diba'",
         "Pengarangnya adalah Imam Wajihuddin Abdu Ar-Rahman bin Muhammad bin Umar bin Ali bin Yusuf bin Ahmad bin Umar ad-Dibai (866H-944H), beliau berasal Zabid, salah satu kota di Yaman.",
-        Palette.dustyPink);
+        arabTitle: "الديبع");
 
     List<ContentModel> dibaContent = [
       ContentModel(
@@ -24,35 +21,29 @@ class BookData {
     ];
     diba.setContent(dibaContent);
 
-    BookModel barjanzi = BookModel(
-      "Barjanzi",
-      "Pengarangnya adalah Imam Wajihuddin Abdu Ar-Rahman bin Muhammad bin Umar bin Ali bin Yusuf bin Ahmad bin Umar ad-Dibai (866H-944H), beliau berasal Zabid, salah satu kota di Yaman.",
-      Palette.softGrey,
-    );
+    BookModel barjanzi = BookModel(1, "Barjanzi",
+        "Pengarangnya adalah Imam Wajihuddin Abdu Ar-Rahman bin Muhammad bin Umar bin Ali bin Yusuf bin Ahmad bin Umar ad-Dibai (866H-944H), beliau berasal Zabid, salah satu kota di Yaman.",
+        arabTitle: "البر زنجى");
     barjanzi.setContent(dibaContent);
 
-    BookModel simtud = BookModel(
-        "Simtud Duror",
+    BookModel simtud = BookModel(2, "Simtud Duror",
         "Pengarangnya adalah Imam Wajihuddin Abdu Ar-Rahman bin Muhammad bin Umar bin Ali bin Yusuf bin Ahmad bin Umar ad-Dibai (866H-944H), beliau berasal Zabid, salah satu kota di Yaman.",
-        Palette.sweetGreen);
+        arabTitle: "سمط الدرر");
     simtud.setContent(dibaContent);
 
-    BookModel burdah = BookModel(
-        "Burdah",
+    BookModel burdah = BookModel(3, "Burdah",
         "Pengarangnya adalah Imam Wajihuddin Abdu Ar-Rahman bin Muhammad bin Umar bin Ali bin Yusuf bin Ahmad bin Umar ad-Dibai (866H-944H), beliau berasal Zabid, salah satu kota di Yaman.",
-        Palette.powderBlue);
+        arabTitle: "البردة");
     burdah.setContent(dibaContent);
 
-    BookModel addiyaul = BookModel(
-        "Addiyaul lami",
+    BookModel addiyaul = BookModel(4, "Addiyaul lami",
         "Pengarangnya adalah Imam Wajihuddin Abdu Ar-Rahman bin Muhammad bin Umar bin Ali bin Yusuf bin Ahmad bin Umar ad-Dibai (866H-944H), beliau berasal Zabid, salah satu kota di Yaman.",
-        Palette.chocoMilk);
+        arabTitle: "الضياءالامع");
     addiyaul.setContent(dibaContent);
 
-    BookModel sarofulAnam = BookModel(
-        "Saroful Anam",
+    BookModel sarofulAnam = BookModel(5, "Saroful Anam",
         "Pengarangnya adalah Imam Wajihuddin Abdu Ar-Rahman bin Muhammad bin Umar bin Ali bin Yusuf bin Ahmad bin Umar ad-Dibai (866H-944H), beliau berasal Zabid, salah satu kota di Yaman.",
-        Palette.dustyGreen);
+        arabTitle: "شرف الأنام");
     sarofulAnam.setContent(dibaContent);
 
     return [diba, barjanzi, simtud, burdah, addiyaul, sarofulAnam];

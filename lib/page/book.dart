@@ -74,11 +74,7 @@ class Book extends StatelessWidget {
                 ),
                 _searchBar(),
                 EmptySpace(
-                  height: 15.0,
-                ),
-                _swipableToggle(),
-                EmptySpace(
-                  height: 7.0,
+                  height: 20.0,
                 ),
               ],
             )),
@@ -125,7 +121,7 @@ class Book extends StatelessWidget {
       child: Container(
         height: 38,
         decoration: BoxDecoration(
-          color: Palette.background,
+          color: Palette.background04,
           borderRadius: BorderRadius.circular(15),
         ),
         child: TextField(
@@ -133,12 +129,12 @@ class Book extends StatelessWidget {
             fontSize: 16,
           ),
           decoration: InputDecoration(
-            hintStyle: TextStyle(fontSize: 15, color: Palette.primary01),
+            hintStyle: TextStyle(fontSize: 15, color: Palette.primaryText),
             hintText: 'Search inside the book..',
             prefixIcon: Icon(
               Icons.search,
               size: 20,
-              color: Palette.primary01,
+              color: Palette.primaryText,
             ),
             border: InputBorder.none,
             contentPadding: EdgeInsets.symmetric(vertical: 4, horizontal: 20),

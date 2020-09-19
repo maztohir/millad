@@ -73,10 +73,6 @@ class Home extends StatelessWidget {
                   context, 'Your recent book', bookData.getBooks()..shuffle(),
                   primary: true),
               EmptySpace(
-                height: 5.0,
-              ),
-              _swipableToggle(),
-              EmptySpace(
                 height: 7.0,
               ),
             ],
@@ -103,7 +99,7 @@ class Home extends StatelessWidget {
       child: Container(
         height: 38,
         decoration: BoxDecoration(
-          color: Palette.background,
+          color: Palette.background04,
           borderRadius: BorderRadius.circular(15),
         ),
         child: TextField(
@@ -111,12 +107,12 @@ class Home extends StatelessWidget {
             fontSize: 16,
           ),
           decoration: InputDecoration(
-            hintStyle: TextStyle(fontSize: 15, color: Palette.primary01),
+            hintStyle: TextStyle(fontSize: 15, color: Palette.primaryText),
             hintText: 'Search..',
             prefixIcon: Icon(
               Icons.search,
               size: 20,
-              color: Palette.primary01,
+              color: Palette.primaryText,
             ),
             border: InputBorder.none,
             contentPadding: EdgeInsets.symmetric(vertical: 4, horizontal: 20),
@@ -157,32 +153,69 @@ class Home extends StatelessWidget {
     );
   }
 
+  Widget _insideCard(BookModel book) {
+    return Container(
+      child: Column(
+        children: [
+          Expanded(
+            child: Container(
+              padding: EdgeInsets.only(top: 13.0),
+              child: SvgPicture.asset(
+                'assets/images/mosque.svg',
+                color: Colors.white,
+              ),
+            ),
+          ),
+          Expanded(
+            child: Stack(
+              alignment: AlignmentDirectional.bottomCenter,
+              children: [
+                Container(
+                  width: double.infinity,
+                  child: SvgPicture.asset(
+                    book.getCoverStyle(),
+                    color: Colors.white,
+                    fit: BoxFit.fill,
+                  ),
+                ),
+                Container(
+                  padding: EdgeInsets.only(bottom: 14.0),
+                  child: Text(
+                    book.arabTitle ?? book.title,
+                    style: ArabTitleText,
+                  ),
+                )
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget _card(BuildContext context, BookModel book, {primary: false}) {
     return Container(
       child: Material(
         color: Colors.transparent,
         child: InkWell(
-          borderRadius: BorderRadius.circular(15.0),
+          borderRadius: BorderRadius.circular(11.0),
           onTap: () => Navigator.pushNamed(context, AppRoute.BOOK_PAGE,
               arguments: {'book': book}),
           child: Container(
             height: 140.0,
             width: 100.0,
+            child: _insideCard(book),
           ),
         ),
       ),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(15),
-        // image: new DecorationImage(
-        //   image: new ExactAssetImage('assets/images/cover/diba.jpg'),
-        //   fit: BoxFit.cover,
-        // ),
-        color: book.color,
+        borderRadius: BorderRadius.circular(11),
+        color: book.getColor(),
         boxShadow: [
           BoxShadow(
               color: primary
                   ? Colors.black.withAlpha(20)
-                  : book.color.withAlpha(60),
+                  : book.getColor().withAlpha(60),
               blurRadius: 3,
               spreadRadius: 2,
               offset: Offset(0.5, 3)),

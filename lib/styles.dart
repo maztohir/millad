@@ -30,6 +30,13 @@ const TitlePrimaryText1 = TextStyle(
   color: Palette.primaryText,
 );
 
+const ArabTitleText = TextStyle(
+  fontFamily: FontNameDefault,
+  fontWeight: FontWeight.w500,
+  fontSize: 14.0,
+  color: Palette.primaryText,
+);
+
 const BodyPrimaryText = TextStyle(
   fontFamily: FontNameDefault,
   fontWeight: FontWeight.normal,
