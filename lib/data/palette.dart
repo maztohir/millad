@@ -6,6 +6,7 @@ class Palette {
 
   static const Color primaryText = Color(0xFFFFFFFF);
   static const Color primaryText01 = Colors.white70;
+  static const Color primaryText02 = Colors.white54;
 
   static const Color background = Colors.white;
   static const Color background01 = Colors.white70;

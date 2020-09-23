@@ -31,13 +31,16 @@ class Home extends StatelessWidget {
         ),
       ),
       extendBodyBehindAppBar: true,
-      body: Column(
-        children: [
-          _header(context, bookData),
-          Expanded(
-            child: _body(context, bookData),
-          )
-        ],
+      body: GestureDetector(
+        onTap: () => FocusScope.of(context).requestFocus(new FocusNode()),
+        child: Column(
+          children: [
+            _header(context, bookData),
+            Expanded(
+              child: _body(context, bookData),
+            )
+          ],
+        ),
       ),
     );
   }
@@ -73,22 +76,11 @@ class Home extends StatelessWidget {
                   context, 'Your recent book', bookData.getBooks()..shuffle(),
                   primary: true),
               EmptySpace(
-                height: 7.0,
+                height: 2.0,
               ),
             ],
           )),
         ],
-      ),
-    );
-  }
-
-  Widget _swipableToggle() {
-    return Container(
-      height: 4,
-      width: 25,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10.0),
-        color: Palette.background03,
       ),
     );
   }
@@ -103,11 +95,9 @@ class Home extends StatelessWidget {
           borderRadius: BorderRadius.circular(15),
         ),
         child: TextField(
-          style: TextStyle(
-            fontSize: 16,
-          ),
+          style: TextStyle(fontSize: 16, color: Palette.primaryText),
           decoration: InputDecoration(
-            hintStyle: TextStyle(fontSize: 15, color: Palette.primaryText),
+            hintStyle: TextStyle(fontSize: 15, color: Palette.primaryText02),
             hintText: 'Search..',
             prefixIcon: Icon(
               Icons.search,

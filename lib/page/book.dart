@@ -19,24 +19,28 @@ class Book extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Palette.background,
-        appBar: PreferredSize(
-          preferredSize: Size.fromHeight(0.0),
-          child: AppBar(
-            elevation: 0,
-            backgroundColor: Colors.transparent,
-            brightness: Brightness.dark,
-          ),
+      backgroundColor: Palette.background,
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(0.0),
+        child: AppBar(
+          elevation: 0,
+          backgroundColor: Colors.transparent,
+          brightness: Brightness.dark,
         ),
-        extendBodyBehindAppBar: true,
-        body: Column(
+      ),
+      extendBodyBehindAppBar: true,
+      body: GestureDetector(
+        onTap: () => FocusScope.of(context).requestFocus(new FocusNode()),
+        child: Column(
           children: [
             _header(context),
             Expanded(
               child: _body(context),
             )
           ],
-        ));
+        ),
+      ),
+    );
   }
 
   Widget _header(BuildContext context) {
@@ -84,33 +88,19 @@ class Book extends StatelessWidget {
 
   Widget _backButton(BuildContext context) {
     return Container(
-        padding: EdgeInsets.only(left: 17.0),
-        child: Material(
-          color: Colors.transparent,
-          child: InkWell(
-              customBorder: CircleBorder(),
-              onTap: () => Navigator.of(context).pop(),
-              child: Container(
-                padding: EdgeInsets.all(10.0),
-                child: Icon(
-                  Icons.arrow_back,
-                  color: Colors.white,
-                ),
-              )),
-        ));
-  }
-
-  Widget _swipableToggle() {
-    return Container(
-      width: double.infinity,
-      alignment: Alignment.center,
-      child: Container(
-        height: 4,
-        width: 25,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10.0),
-          color: Palette.background03,
-        ),
+      padding: EdgeInsets.only(left: 17.0),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+            customBorder: CircleBorder(),
+            onTap: () => Navigator.of(context).pop(),
+            child: Container(
+              padding: EdgeInsets.all(10.0),
+              child: Icon(
+                Icons.arrow_back,
+                color: Colors.white,
+              ),
+            )),
       ),
     );
   }
@@ -125,11 +115,9 @@ class Book extends StatelessWidget {
           borderRadius: BorderRadius.circular(15),
         ),
         child: TextField(
-          style: TextStyle(
-            fontSize: 16,
-          ),
+          style: TextStyle(fontSize: 16, color: Palette.primaryText),
           decoration: InputDecoration(
-            hintStyle: TextStyle(fontSize: 15, color: Palette.primaryText),
+            hintStyle: TextStyle(fontSize: 15, color: Palette.primaryText02),
             hintText: 'Search inside the book..',
             prefixIcon: Icon(
               Icons.search,
