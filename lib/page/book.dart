@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
@@ -11,10 +13,19 @@ import '../styles.dart';
 import '../component/EmptySpace.dart';
 import '../component/particles.dart';
 
-class Book extends StatelessWidget {
+class Book extends StatefulWidget {
   final BookModel book;
 
   Book(this.book);
+
+  @override
+  BookState createState() => BookState(book.contents);
+}
+
+class BookState extends State<Book> with SingleTickerProviderStateMixin {
+  List<ContentModel> contents = [];
+
+  BookState(this.contents);
 
   @override
   Widget build(BuildContext context) {
@@ -105,6 +116,26 @@ class Book extends StatelessWidget {
     );
   }
 
+  Timer _debounce;
+  _onSearchChangedHandler(String value) {
+    if (_debounce?.isActive ?? false) _debounce.cancel();
+    _debounce = Timer(const Duration(milliseconds: 500), () {
+      _updateContentScreen(value);
+    });
+  }
+
+  _updateContentScreen(String filter) {
+    if (filter.isEmpty) {
+      contents = widget.book.contents;
+    } else {
+      contents = widget.book.contents
+          .where((element) =>
+              element.title.toLowerCase().contains(filter.toLowerCase()))
+          .toList();
+    }
+    setState(() {});
+  }
+
   Widget _searchBar() {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 30),
@@ -115,6 +146,7 @@ class Book extends StatelessWidget {
           borderRadius: BorderRadius.circular(15),
         ),
         child: TextField(
+          onChanged: (vv) => _onSearchChangedHandler(vv),
           style: TextStyle(fontSize: 16, color: Palette.primaryText),
           decoration: InputDecoration(
             hintStyle: TextStyle(fontSize: 15, color: Palette.primaryText02),
@@ -143,7 +175,7 @@ class Book extends StatelessWidget {
         EmptySpace(
           width: 10.0,
         ),
-        Text(this.book.title, style: LogoText),
+        Text(widget.book.title, style: LogoText),
       ]),
     );
   }
@@ -152,14 +184,14 @@ class Book extends StatelessWidget {
     return Container(
       padding: EdgeInsets.only(left: 30.0, right: 30.0),
       child: Text(
-        this.book.description,
+        widget.book.description,
         style: BodyPrimaryText,
       ),
     );
   }
 
   Widget _body(BuildContext context) {
-    List<ContentModel> contents = this.book.contents;
+    List<ContentModel> contents = this.contents;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -189,8 +221,8 @@ class Book extends StatelessWidget {
       child: InkWell(
         onTap: () => Navigator.pushNamed(context, AppRoute.BOOK_CONTENT_PAGE,
             arguments: {
-              'book': this.book,
-              'index': this.book.contents.indexOf(content)
+              'book': widget.book,
+              'index': widget.book.contents.indexOf(content)
             }),
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 30.0),

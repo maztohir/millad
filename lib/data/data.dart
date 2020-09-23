@@ -2,7 +2,7 @@ import '../model/content.dart';
 import '../model/book.dart';
 
 class BookData {
-  List<BookModel> getBooks() {
+  List<BookModel> books() {
     BookModel diba = BookModel(0, "Diba'",
         "Pengarangnya adalah Imam Wajihuddin Abdu Ar-Rahman bin Muhammad bin Umar bin Ali bin Yusuf bin Ahmad bin Umar ad-Dibai (866H-944H), beliau berasal Zabid, salah satu kota di Yaman.",
         arabTitle: "الديبع");

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
@@ -11,14 +13,25 @@ import '../data/data.dart';
 import '../component/EmptySpace.dart';
 import '../component/particles.dart';
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
+  final List<BookModel> books = BookData().books();
+  final List<BookModel> shuffleBooks = BookData().books()..shuffle();
+
+  @override
+  HomeState createState() => HomeState(books, shuffleBooks);
+}
+
+class HomeState extends State<Home> with SingleTickerProviderStateMixin {
+  List<BookModel> books = [];
+  List<BookModel> shuffleBooks = [];
+
+  HomeState(this.books, this.shuffleBooks);
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
     ));
-
-    BookData bookData = BookData();
 
     return Scaffold(
       backgroundColor: Palette.background,
@@ -35,9 +48,9 @@ class Home extends StatelessWidget {
         onTap: () => FocusScope.of(context).requestFocus(new FocusNode()),
         child: Column(
           children: [
-            _header(context, bookData),
+            _header(context),
             Expanded(
-              child: _body(context, bookData),
+              child: _body(context),
             )
           ],
         ),
@@ -45,7 +58,7 @@ class Home extends StatelessWidget {
     );
   }
 
-  Widget _header(BuildContext context, BookData bookData) {
+  Widget _header(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.only(
@@ -68,12 +81,11 @@ class Home extends StatelessWidget {
               EmptySpace(
                 height: 20.0,
               ),
-              _searchBar(),
+              _searchBar(context),
               EmptySpace(
                 height: 40.0,
               ),
-              _bookListHolder(
-                  context, 'Your recent book', bookData.getBooks()..shuffle(),
+              _bookListHolder(context, 'Your recent book', shuffleBooks,
                   primary: true),
               EmptySpace(
                 height: 2.0,
@@ -85,7 +97,29 @@ class Home extends StatelessWidget {
     );
   }
 
-  Widget _searchBar() {
+  Timer _debounce;
+  _onSearchChangedHandler(String value) {
+    if (_debounce?.isActive ?? false) _debounce.cancel();
+    _debounce = Timer(const Duration(milliseconds: 500), () {
+      _updateBookScreen(value);
+    });
+  }
+
+  _updateBookScreen(String value) {
+    books = _filter(widget.books, value);
+    shuffleBooks = _filter(widget.shuffleBooks, value);
+    setState(() {});
+  }
+
+  _filter(List<BookModel> books, String filter) {
+    if (filter.isEmpty) return books;
+    return books
+        .where((element) =>
+            element.title.toLowerCase().startsWith(filter.toLowerCase()))
+        .toList();
+  }
+
+  Widget _searchBar(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 30),
       child: Container(
@@ -95,6 +129,7 @@ class Home extends StatelessWidget {
           borderRadius: BorderRadius.circular(15),
         ),
         child: TextField(
+          onChanged: (vv) => _onSearchChangedHandler(vv),
           style: TextStyle(fontSize: 16, color: Palette.primaryText),
           decoration: InputDecoration(
             hintStyle: TextStyle(fontSize: 15, color: Palette.primaryText02),
@@ -250,16 +285,15 @@ class Home extends StatelessWidget {
     );
   }
 
-  Widget _body(BuildContext context, BookData bookData) {
+  Widget _body(BuildContext context) {
     return ListView(
       shrinkWrap: true,
       scrollDirection: Axis.vertical,
       physics: BouncingScrollPhysics(),
       children: [
-        _bookListHolder(context, "Maulid's related", bookData.getBooks()),
+        _bookListHolder(context, "Maulid's related", books),
         EmptySpace(height: 10.0),
-        _bookListHolder(
-            context, "Another sholawat", bookData.getBooks()..shuffle())
+        _bookListHolder(context, "Another sholawat", shuffleBooks)
       ],
     );
   }
