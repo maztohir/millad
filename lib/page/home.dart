@@ -152,6 +152,7 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
   }
 
   Widget _recentBookBuilder(BuildContext context) {
+    print('I called again');
     return FutureBuilder(
         future: widget.recentPageStorage.getRecentPages(),
         builder:
@@ -159,9 +160,12 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
           if (snapshot.connectionState == ConnectionState.done) {
             if (snapshot.data.length > 0) {
               return Container(
-                  margin: EdgeInsets.only(top: 20.0), child: Container()
-                  // _bookListHolder(context, 'Your recent book', snapshot.data, primary: true),
-                  );
+                margin: EdgeInsets.only(top: 20.0),
+                // child: Container(),
+                child: _bookListHolder(context, 'Your recent book',
+                    snapshot.data.reversed.toList(),
+                    primary: true),
+              );
             }
           }
           return Container();
@@ -170,7 +174,7 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
   Widget _bookListHolder(
       BuildContext context, String title, List<BookModel> bookList,
-      {primary: false, index}) {
+      {primary: false}) {
     return Container(
       child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
         Container(
@@ -193,7 +197,7 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
             physics: BouncingScrollPhysics(),
             children: bookList
                 .map((book) => _bookCard(context, book,
-                    primary: primary, index: book.recentPage))
+                    primary: primary, index: book.lastIndex))
                 .toList(),
           ),
         )
@@ -248,7 +252,7 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
   }
 
   goToBookContentPage(BookModel book, int index) async {
-    Navigator.pushNamed(context, AppRoute.BOOK_CONTENT_PAGE,
+    await Navigator.pushNamed(context, AppRoute.BOOK_CONTENT_PAGE,
         arguments: {'book': book, 'index': index});
     setState(() {});
   }
@@ -261,7 +265,7 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
         child: InkWell(
           borderRadius: BorderRadius.circular(11.0),
           onTap: () {
-            widget.recentPageStorage.update(book.id, index ?? 1);
+            widget.recentPageStorage.update(book.id, index ?? 0);
             if (index != null) {
               goToBookContentPage(book, index);
             } else {
@@ -305,7 +309,7 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
             style: primary ? TitlePrimaryText1 : TitleBackgroundText1,
           ),
           Text(
-            "${book.totalPage} pages",
+            index != null ? "Page ${index + 1}" : "${book.totalPage} pages",
             style: primary ? BodyPrimaryText1 : BodyBackgroundText1,
           )
         ],

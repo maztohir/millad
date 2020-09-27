@@ -31,7 +31,6 @@ class ContentState extends State<Content> with SingleTickerProviderStateMixin {
 
   @override
   void initState() {
-    print("initial index is ${widget.initialIndex}");
     this.activeIndex = widget.initialIndex;
 
     _pageController = PageController(
