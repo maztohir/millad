@@ -3,8 +3,8 @@ import 'package:flutter/services.dart';
 
 import './styles.dart';
 
-import './data/route.dart';
-import './data/palette.dart';
+import './storage/route.dart';
+import './storage/palette.dart';
 
 import './page/home.dart';
 import './page/book.dart';

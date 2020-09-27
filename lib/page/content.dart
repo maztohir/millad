@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_html/flutter_html.dart';
 
-import '../data/palette.dart';
+import '../storage/palette.dart';
 import '../model/book.dart';
 import '../model/content.dart';
 import '../styles.dart';

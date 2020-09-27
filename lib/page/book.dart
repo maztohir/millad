@@ -5,8 +5,8 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../data/palette.dart';
-import '../data/route.dart';
+import '../storage/palette.dart';
+import '../storage/route.dart';
 import '../model/book.dart';
 import '../model/content.dart';
 import '../styles.dart';

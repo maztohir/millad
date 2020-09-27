@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:millad/data/route.dart';
-import 'package:millad/model/book.dart';
 
-import '../data/palette.dart';
+import '../storage/route.dart';
+import '../storage/palette.dart';
+import '../storage/book.dart';
+import '../model/book.dart';
 import '../styles.dart';
-import '../data/data.dart';
 import '../component/EmptySpace.dart';
 import '../component/particles.dart';
 
@@ -18,7 +18,9 @@ class Home extends StatefulWidget {
   final List<BookModel> shuffleBooks = BookData().books()..shuffle();
 
   @override
-  HomeState createState() => HomeState(books, shuffleBooks);
+  HomeState createState() {
+    return HomeState(books, shuffleBooks);
+  }
 }
 
 class HomeState extends State<Home> with SingleTickerProviderStateMixin {
@@ -224,8 +226,10 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
         color: Colors.transparent,
         child: InkWell(
           borderRadius: BorderRadius.circular(11.0),
-          onTap: () => Navigator.pushNamed(context, AppRoute.BOOK_PAGE,
-              arguments: {'book': book}),
+          onTap: () {
+            return Navigator.pushNamed(context, AppRoute.BOOK_PAGE,
+                arguments: {'book': book});
+          },
           child: Container(
             height: 140.0,
             width: 100.0,

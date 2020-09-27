@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:millad/data/palette.dart';
 
+import '../storage/palette.dart';
 import './particle_model.dart';
 
 class ParticlePainter extends CustomPainter {

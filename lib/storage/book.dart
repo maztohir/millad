@@ -48,4 +48,9 @@ class BookData {
 
     return [diba, barjanzi, simtud, burdah, addiyaul, sarofulAnam];
   }
+
+  List<BookModel> getBookByIds(List<int> list_ids) {
+    List<BookModel> books = this.books();
+    return books.where((element) => list_ids.contains(element.id));
+  }
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'content.dart';
-import '../data/palette.dart';
+import '../storage/palette.dart';
 
 class BookModel {
   String title;
