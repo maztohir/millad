@@ -10,7 +10,11 @@ class RecentPageStorage {
   Future<Map<String, dynamic>> _getMap() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String values = pref.getString(KEY);
-    return jsonDecode(values);
+    try {
+      return jsonDecode(values);
+    } catch (e) {
+      return {};
+    }
   }
 
   _saveMap(Map<String, dynamic> recents) async {

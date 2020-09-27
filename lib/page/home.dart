@@ -87,6 +87,9 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
                 height: 20.0,
               ),
               _searchBar(context),
+              EmptySpace(
+                height: 20.0,
+              ),
               _recentBookBuilder(context),
               EmptySpace(
                 height: 2.0,
@@ -153,15 +156,15 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
         future: widget.recentPageStorage.getRecentPages(),
         builder:
             (BuildContext context, AsyncSnapshot<List<BookModel>> snapshot) {
-          if (snapshot.connectionState == ConnectionState.done &&
-              snapshot.data.length > 0)
-            return Container(
-              margin: EdgeInsets.only(top: 40.0),
-              child: _bookListHolder(context, 'Your recent book', snapshot.data,
-                  primary: true),
-            );
-          else
-            return Container();
+          if (snapshot.connectionState == ConnectionState.done) {
+            if (snapshot.data.length > 0) {
+              return Container(
+                  margin: EdgeInsets.only(top: 20.0), child: Container()
+                  // _bookListHolder(context, 'Your recent book', snapshot.data, primary: true),
+                  );
+            }
+          }
+          return Container();
         });
   }
 
