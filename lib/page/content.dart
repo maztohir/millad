@@ -5,6 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:flutter_html/flutter_html.dart';
 
 import '../storage/palette.dart';
+import '../storage/recent_page.dart';
 import '../model/book.dart';
 import '../model/content.dart';
 import '../styles.dart';
@@ -14,6 +15,8 @@ import '../component/particles.dart';
 class Content extends StatefulWidget {
   final BookModel book;
   final int initialIndex;
+
+  final RecentPageStorage recentPageStorage = RecentPageStorage();
 
   Content(this.book, this.initialIndex);
 
@@ -239,6 +242,7 @@ class ContentState extends State<Content> with SingleTickerProviderStateMixin {
         onPageChanged: (pageIndex) {
           setState(() {
             this.activeIndex = pageIndex;
+            widget.recentPageStorage.update(widget.book.id, pageIndex);
           });
         },
         children: widget.book.contents

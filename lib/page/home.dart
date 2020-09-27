@@ -8,14 +8,17 @@ import 'package:flutter_svg/svg.dart';
 import '../storage/route.dart';
 import '../storage/palette.dart';
 import '../storage/book.dart';
+import '../storage/recent_page.dart';
 import '../model/book.dart';
 import '../styles.dart';
 import '../component/EmptySpace.dart';
 import '../component/particles.dart';
 
 class Home extends StatefulWidget {
-  final List<BookModel> books = BookData().books();
-  final List<BookModel> shuffleBooks = BookData().books()..shuffle();
+  final List<BookModel> books = BookStorage().books();
+  final List<BookModel> shuffleBooks = BookStorage().books()..shuffle();
+
+  final RecentPageStorage recentPageStorage = RecentPageStorage();
 
   @override
   HomeState createState() {
@@ -84,11 +87,7 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
                 height: 20.0,
               ),
               _searchBar(context),
-              EmptySpace(
-                height: 40.0,
-              ),
-              _bookListHolder(context, 'Your recent book', shuffleBooks,
-                  primary: true),
+              _recentBookBuilder(context),
               EmptySpace(
                 height: 2.0,
               ),
@@ -149,9 +148,26 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
     );
   }
 
+  Widget _recentBookBuilder(BuildContext context) {
+    return FutureBuilder(
+        future: widget.recentPageStorage.getRecentPages(),
+        builder:
+            (BuildContext context, AsyncSnapshot<List<BookModel>> snapshot) {
+          if (snapshot.connectionState == ConnectionState.done &&
+              snapshot.data.length > 0)
+            return Container(
+              margin: EdgeInsets.only(top: 40.0),
+              child: _bookListHolder(context, 'Your recent book', snapshot.data,
+                  primary: true),
+            );
+          else
+            return Container();
+        });
+  }
+
   Widget _bookListHolder(
       BuildContext context, String title, List<BookModel> bookList,
-      {primary: false}) {
+      {primary: false, index}) {
     return Container(
       child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
         Container(
@@ -166,16 +182,18 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
           height: 10.0,
         ),
         Container(
-            height: 200,
-            child: ListView(
-              padding: EdgeInsets.symmetric(horizontal: 23.0),
-              shrinkWrap: true,
-              scrollDirection: Axis.horizontal,
-              physics: BouncingScrollPhysics(),
-              children: bookList
-                  .map((book) => _bookCard(context, book, primary: primary))
-                  .toList(),
-            ))
+          height: 200,
+          child: ListView(
+            padding: EdgeInsets.symmetric(horizontal: 23.0),
+            shrinkWrap: true,
+            scrollDirection: Axis.horizontal,
+            physics: BouncingScrollPhysics(),
+            children: bookList
+                .map((book) => _bookCard(context, book,
+                    primary: primary, index: book.recentPage))
+                .toList(),
+          ),
+        )
       ]),
     );
   }
@@ -220,15 +238,32 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
     );
   }
 
-  Widget _card(BuildContext context, BookModel book, {primary: false}) {
+  goToBookPage(BookModel book) async {
+    await Navigator.pushNamed(context, AppRoute.BOOK_PAGE,
+        arguments: {'book': book});
+    setState(() {});
+  }
+
+  goToBookContentPage(BookModel book, int index) async {
+    Navigator.pushNamed(context, AppRoute.BOOK_CONTENT_PAGE,
+        arguments: {'book': book, 'index': index});
+    setState(() {});
+  }
+
+  Widget _card(BuildContext context, BookModel book,
+      {bool primary: false, int index}) {
     return Container(
       child: Material(
         color: Colors.transparent,
         child: InkWell(
           borderRadius: BorderRadius.circular(11.0),
           onTap: () {
-            return Navigator.pushNamed(context, AppRoute.BOOK_PAGE,
-                arguments: {'book': book});
+            widget.recentPageStorage.update(book.id, index ?? 1);
+            if (index != null) {
+              goToBookContentPage(book, index);
+            } else {
+              goToBookPage(book);
+            }
           },
           child: Container(
             height: 140.0,
@@ -254,12 +289,13 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
     );
   }
 
-  Widget _bookCard(BuildContext context, BookModel book, {primary: false}) {
+  Widget _bookCard(BuildContext context, BookModel book,
+      {primary: false, index}) {
     return Container(
       padding: EdgeInsets.only(left: 5.0, top: 5.0, bottom: 5.0),
       child: Column(
         children: [
-          _card(context, book, primary: primary),
+          _card(context, book, primary: primary, index: index),
           EmptySpace(height: 9.0),
           Text(
             book.title,

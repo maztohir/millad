@@ -9,6 +9,7 @@ class BookModel {
   int id;
   int totalPage;
   String arabTitle;
+  int recentPage;
 
   List<ContentModel> contents;
 
