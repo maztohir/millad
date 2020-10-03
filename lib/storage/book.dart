@@ -21,14 +21,6 @@ class BookStorage {
         await rootBundle.loadString("assets/books/burdah/structure.json");
     BookModel burdah = BookModel.fromJson(jsonDecode(burdahJson));
 
-    BookModel addiyaul = BookModel.fromJson(jsonDecode(dibaJson));
-
-    BookModel sarofulAnam = BookModel.fromJson(jsonDecode(dibaJson));
-
-    return [diba, barjanzi, simtud, burdah, addiyaul, sarofulAnam];
+    return [diba, barjanzi, simtud, burdah];
   }
-
-  // BookModel book(int bookId) {
-  //   return books().singleWhere((element) => element.id == bookId);
-  // }
 }
