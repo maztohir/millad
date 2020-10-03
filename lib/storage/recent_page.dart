@@ -32,11 +32,8 @@ class RecentPageStorage {
     _saveMap(recents);
   }
 
-  Future<List<BookModel>> getRecentPages() async {
+  Future<List<BookModel>> getRecentPages(List<BookModel> originalBooks) async {
     Map<String, dynamic> maps = await _getMap();
-
-    BookStorage bookStorage = BookStorage();
-    List<BookModel> originalBooks = await bookStorage.books();
 
     List<BookModel> books = [];
     maps.forEach((key, value) {

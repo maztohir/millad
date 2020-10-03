@@ -34,13 +34,15 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
   @override
   void initState() {
+    loadBook();
     super.initState();
   }
 
   Future<void> loadBook() async {
     List<BookModel> books = await BookStorage().books();
-    books.addAll(books);
-    shuffleBooks.addAll(books..shuffle());
+    widget.books.addAll(books);
+    widget.shuffleBooks.addAll(books..shuffle());
+    print(books[0].arabTitle);
     setState(() {});
   }
 
@@ -166,10 +168,13 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
   Widget _recentBookBuilder(BuildContext context) {
     print('I called again');
     return FutureBuilder(
-        future: widget.recentPageStorage.getRecentPages(),
+        future: widget.recentPageStorage.getRecentPages(widget.books),
         builder:
             (BuildContext context, AsyncSnapshot<List<BookModel>> snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
+            if (snapshot.data == null) {
+              return Container();
+            }
             if (snapshot.data.length > 0) {
               return Container(
                 margin: EdgeInsets.only(top: 20.0),

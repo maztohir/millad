@@ -9,9 +9,9 @@ class BookStorage {
         await rootBundle.loadString("assets/books/diba/structure.json");
     BookModel diba = BookModel.fromJson(jsonDecode(dibaJson));
 
-    String barjanziJson =
+    String barzanjiJson =
         await rootBundle.loadString("assets/books/barzanji/structure.json");
-    BookModel barjanzi = BookModel.fromJson(jsonDecode(barjanziJson));
+    BookModel barzanji = BookModel.fromJson(jsonDecode(barzanjiJson));
 
     String simtudJson =
         await rootBundle.loadString("assets/books/simtud/structure.json");
@@ -21,6 +21,6 @@ class BookStorage {
         await rootBundle.loadString("assets/books/burdah/structure.json");
     BookModel burdah = BookModel.fromJson(jsonDecode(burdahJson));
 
-    return [diba, barjanzi, simtud, burdah];
+    return [diba, barzanji, simtud, burdah];
   }
 }
