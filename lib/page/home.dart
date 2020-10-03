@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:millad/page/book.dart';
 
 import '../storage/route.dart';
 import '../storage/palette.dart';
@@ -29,6 +30,7 @@ class Home extends StatefulWidget {
 class HomeState extends State<Home> with SingleTickerProviderStateMixin {
   List<BookModel> maulidBooks = [];
   List<BookModel> otherBooks = [];
+  List<BookModel> recentBooks = [];
 
   HomeState(this.maulidBooks, this.otherBooks);
 
@@ -47,6 +49,8 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
     });
     this.maulidBooks = widget.maulidBooks;
     this.otherBooks = widget.otherBooks;
+
+    widget.recentPageStorage.getRecentPages();
   }
 
   @override
@@ -171,13 +175,13 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
   Widget _recentBookBuilder(BuildContext context) {
     print('I called again');
     return FutureBuilder(
-        future: widget.recentPageStorage.getRecentPages(widget.maulidBooks),
+        future: widget.recentPageStorage.getRecentPages(),
         builder:
             (BuildContext context, AsyncSnapshot<List<BookModel>> snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
-            // if (snapshot.data == null) {
-            //   return Container();
-            // }
+            if (snapshot.data == null) {
+              return Container();
+            }
             if (snapshot.data.length > 0) {
               return Container(
                 margin: EdgeInsets.only(top: 20.0),
