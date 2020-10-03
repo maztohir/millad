@@ -15,8 +15,8 @@ import '../component/EmptySpace.dart';
 import '../component/particles.dart';
 
 class Home extends StatefulWidget {
-  final List<BookModel> books = BookStorage().books();
-  final List<BookModel> shuffleBooks = BookStorage().books()..shuffle();
+  final List<BookModel> books = []; //BookStorage().books();
+  final List<BookModel> shuffleBooks = []; //BookStorage().books()..shuffle();
 
   final RecentPageStorage recentPageStorage = RecentPageStorage();
 
@@ -31,6 +31,18 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
   List<BookModel> shuffleBooks = [];
 
   HomeState(this.books, this.shuffleBooks);
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  Future<void> loadBook() async {
+    List<BookModel> books = await BookStorage().books();
+    books.addAll(books);
+    shuffleBooks.addAll(books..shuffle());
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {

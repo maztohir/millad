@@ -1,0 +1,48 @@
+{
+  "id": 0,
+  "title": "Barjanji'",
+  "description": "Pengarangnya adalah Imam Wajihuddin Abdu Ar-Rahman bin Muhammad bin Umar bin Ali bin Yusuf bin Ahmad bin Umar ad-Dibai (866H-944H), beliau berasal Zabid, salah satu kota di Yaman.",
+  "arab_title": "البر زنجى",
+  "contents": [
+    {
+      "title": "أَبْتَدِئُ اْلإِمْلاَءَ",
+      "content_uri": "assets/books/barzanji/web1.html"
+    },
+    {
+      "title": "وَ بَعْدُ فَأَقُوْل",
+      "content_uri": "assets/books/barzanji/web2.html"
+    },
+    {
+      "title": "وَلَمَّا أَرَادَ اللهُ تَعَالَي",
+      "content_uri": "assets/books/barzanji/web3.html"
+    },
+    {
+      "title": "وَلَمَّا تَمَّ مِنْ حَمْلِهِ",
+      "content_uri": "assets/books/barzanji/web4.html"
+    },
+    {
+      "title": "وَبَرَزَ وَاضِعًا يَدَيْهِ",
+      "content_uri": "assets/books/barzanji/web5.html"
+    },
+    {
+      "title": "وَظَهَرَ عِنْدَ وِلَادَتِهِ",
+      "content_uri": "assets/books/barzanji/web6.html"
+    },
+    {
+      "title": "وَأَرْضَعَتْهُ أُمُّهُ أَيَّاماً",
+      "content_uri": "assets/books/barzanji/web7.html"
+    },
+    {
+      "title": "وَكَانَ يَشُبُّ",
+      "content_uri": "assets/books/barzanji/web8.html"
+    },
+    {
+      "title": "وَلمَّا بَلَغَ أَرْبَعَ سِنِيْنَ",
+      "content_uri": "assets/books/barzanji/web9.html"
+    },
+    {
+      "title": "وَلَمَّا بَلَغَ خَمْساً وَعِشْرِيْنَ",
+      "content_uri": "assets/books/barzanji/web10.html"
+    }
+  ]
+}

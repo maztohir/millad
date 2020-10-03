@@ -7,17 +7,30 @@ class BookModel {
   String title;
   String description;
   int id;
-  int totalPage;
   String arabTitle;
   int lastIndex;
 
   List<ContentModel> contents;
 
-  BookModel(this.id, this.title, this.description, {this.arabTitle});
+  BookModel(this.id, this.title, this.description,
+      {this.arabTitle, this.contents});
 
-  setContent(List<ContentModel> _contents) {
-    this.contents = _contents;
-    this.totalPage = _contents.length;
+  factory BookModel.fromJson(Map<String, dynamic> json) {
+    var list = json['contents'] as List;
+    List<ContentModel> contentList =
+        list.map((i) => ContentModel.fromJson(i)).toList();
+
+    return BookModel(
+      json['id'],
+      json['title'],
+      json['description'],
+      arabTitle: json['arab_title'],
+      contents: contentList,
+    );
+  }
+
+  int get totalPage {
+    return this.contents.length ?? 0;
   }
 
   getColor() {

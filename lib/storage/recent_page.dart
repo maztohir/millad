@@ -34,11 +34,15 @@ class RecentPageStorage {
 
   Future<List<BookModel>> getRecentPages() async {
     Map<String, dynamic> maps = await _getMap();
+
     BookStorage bookStorage = BookStorage();
+    List<BookModel> originalBooks = await bookStorage.books();
 
     List<BookModel> books = [];
     maps.forEach((key, value) {
-      BookModel book = bookStorage.book(int.parse(key));
+      BookModel book = originalBooks.singleWhere(
+        (el) => el.id == int.parse(key),
+      );
       book.lastIndex = value;
       books.add(book);
     });

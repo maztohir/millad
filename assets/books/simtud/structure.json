@@ -1,0 +1,48 @@
+{
+  "id": 0,
+  "title": "Simtudduror'",
+  "description": "Pengarangnya adalah Imam Wajihuddin Abdu Ar-Rahman bin Muhammad bin Umar bin Ali bin Yusuf bin Ahmad bin Umar ad-Dibai (866H-944H), beliau berasal Zabid, salah satu kota di Yaman.",
+  "arab_title": "سمط الدرر",
+  "contents": [
+    {
+      "title": "يا رَبِّ صَـلِّ عَلَى مُحَمَّد أَشْرَف بَدْرٍ فِي الْكَوْنِ اَشْرَقْ",
+      "content_uri": "assets/books/diba/web1.html"
+    },
+    {
+      "title": "اَلْحَمْدُ لِلّهِ الْقَوِيِّ سُلْطَانُهْ",
+      "content_uri": "assets/books/diba/web2.html"
+    },
+    {
+      "title": "تَجَلَّى الْحَقُّ فِي عَالَمِ قُدْسِهِ الْوَاسِعْ",
+      "content_uri": "assets/books/diba/web3.html"
+    },
+    {
+      "title": "وَاَشْهَدُ اَنْ لا اِلهَ اِلا اللّهُ وَحْدَه لا شَرِيْكَ لَه شَهَادَةً يُعْرِبُ بِهَا اللِّسَانْ",
+      "content_uri": "assets/books/diba/web4.html"
+    },
+    {
+      "title": "اَمَّا بَعْدُ فَلَمَّا تَعَلَّقَت إِرَادَةُ اللّهِ فِيْ الْعِلْم الْقَدِيمْ",
+      "content_uri": "assets/books/diba/web5.html"
+    },
+    {
+      "title": "وَقَدْ آنَ لِلْقَلَمِ اَنْ يَخُطَّ مَا حَرَّكَتْهُ فِيْهِ الْأَنَامِلْ",
+      "content_uri": "assets/books/diba/web6.html"
+    },
+    {
+      "title": "وَمُنْذُ عَلِقَتْ بِه هذِهِ الدُّرَّةُ الْمَكْنُوْنَةْ",
+      "content_uri": "assets/books/diba/web7.html"
+    },
+    {
+      "title": "فَحِيْنَ قَرُبَ اَوَانُ وَضْعُ هذَا الْحَبِيبْ",
+      "content_uri": "assets/books/diba/web8.html"
+    },
+    {
+      "title": "أَشْرَقَ الْكَوْنُ ابْتِهَاجًـا",
+      "content_uri": "assets/books/diba/web9.html"
+    },
+    {
+      "title": "Accordion Title",
+      "content_uri": "assets/books/diba/web10.html"
+    }
+  ]
+}
