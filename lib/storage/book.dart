@@ -33,6 +33,16 @@ class BookStorage {
           contentUri: "assets/books/aqidatulawam/content.json",
           description:
               "Pengarangnya adalah Imam Wajihuddin Abdu Ar-Rahman bin Muhammad bin Umar bin Ali bin Yusuf bin Ahmad bin Umar ad-simtudi (866H-944H), beliau berasal Zabid, salah satu kota di Yaman."),
+      BookModel(5, 'Sholawat Munjiyat',
+          arabTitle: "منجيات",
+          contentUri: "assets/books/munjiyat/content.json",
+          description:
+              "Pengarangnya adalah Imam Wajihuddin Abdu Ar-Rahman bin Muhammad bin Umar bin Ali bin Yusuf bin Ahmad bin Umar ad-simtudi (866H-944H), beliau berasal Zabid, salah satu kota di Yaman."),
+      BookModel(6, 'Tibbil Qulub',
+          arabTitle: "تبيل قلوب",
+          contentUri: "assets/books/tibbilqulub/content.json",
+          description:
+              "Pengarangnya adalah Imam Wajihuddin Abdu Ar-Rahman bin Muhammad bin Umar bin Ali bin Yusuf bin Ahmad bin Umar ad-simtudi (866H-944H), beliau berasal Zabid, salah satu kota di Yaman."),
     ];
   }
 }
