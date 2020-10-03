@@ -80,9 +80,16 @@ const BodyBackgroundText1 = TextStyle(
   color: Palette.backgroundText,
 );
 
-const ArabicContentText = TextStyle(
+const ContentArabicText = TextStyle(
   fontFamily: FontNameDefault,
   fontWeight: FontWeight.normal,
   fontSize: 18.0,
+  color: Palette.backgroundText,
+);
+
+const ContentTranslateText = TextStyle(
+  fontFamily: FontNameDefault,
+  fontWeight: FontWeight.normal,
+  fontSize: 13.0,
   color: Palette.backgroundText,
 );

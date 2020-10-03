@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_html/style.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_html/flutter_html.dart';
 
@@ -273,11 +274,18 @@ class ContentState extends State<Content> with SingleTickerProviderStateMixin {
       width: double.infinity,
       child: SingleChildScrollView(
         child: Html(
-          padding: EdgeInsets.only(
-              top: 105.0, left: 30.0, right: 30.0, bottom: 30.0),
           data: content,
-          defaultTextStyle: ArabicContentText,
-          customTextAlign: (_) => TextAlign.center,
+          style: {
+            "div": Style(
+              padding: EdgeInsets.fromLTRB(30, 105, 30, 30),
+              textAlign: TextAlign.center,
+            ),
+            "p": Style(
+              margin: EdgeInsets.only(bottom: 30),
+            ),
+            ".arab": Style.fromTextStyle(ContentArabicText),
+            ".translate": Style.fromTextStyle(ContentTranslateText)
+          },
         ),
       ),
     );
