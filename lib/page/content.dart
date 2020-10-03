@@ -30,9 +30,12 @@ class ContentState extends State<Content> with SingleTickerProviderStateMixin {
   PageController _pageController;
   int activeIndex;
 
+  bool translationActive;
+
   @override
   void initState() {
     this.activeIndex = widget.initialIndex;
+    this.translationActive = true;
 
     _pageController = PageController(
       initialPage: widget.initialIndex,
@@ -174,6 +177,11 @@ class ContentState extends State<Content> with SingleTickerProviderStateMixin {
     );
   }
 
+  void toggleTranslation() {
+    this.translationActive = !this.translationActive;
+    setState(() {});
+  }
+
   Widget _appBarContent(BuildContext context) {
     ContentModel content = widget.book.contents[this.activeIndex];
     String contentTitle = content.title ?? '';
@@ -210,11 +218,13 @@ class ContentState extends State<Content> with SingleTickerProviderStateMixin {
             color: Colors.transparent,
             child: InkWell(
               customBorder: CircleBorder(),
-              onTap: () => {},
+              onTap: () => {toggleTranslation()},
               child: Container(
                 padding: EdgeInsets.all(10.0),
                 child: SvgPicture.asset(
-                  'assets/images/icon_translate.svg',
+                  this.translationActive
+                      ? 'assets/images/icon_translate_active.svg'
+                      : 'assets/images/icon_translate.svg',
                   color: Colors.white,
                   width: 23,
                 ),
@@ -284,10 +294,12 @@ class ContentState extends State<Content> with SingleTickerProviderStateMixin {
               textAlign: TextAlign.center,
             ),
             "p": Style(
-              margin: EdgeInsets.only(bottom: 30),
+              margin: EdgeInsets.only(bottom: this.translationActive ? 30 : 0),
             ),
             ".arab": Style.fromTextStyle(ContentArabicText),
-            ".translate": Style.fromTextStyle(ContentTranslateText)
+            ".translate": this.translationActive
+                ? Style.fromTextStyle(ContentTranslateText)
+                : Style.fromTextStyle(HideText),
           },
         ),
       ),

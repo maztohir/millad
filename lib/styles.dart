@@ -93,3 +93,7 @@ const ContentTranslateText = TextStyle(
   fontSize: 13.0,
   color: Palette.backgroundText,
 );
+
+const HideText = TextStyle(
+  fontSize: 0,
+);
