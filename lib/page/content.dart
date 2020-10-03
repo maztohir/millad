@@ -198,9 +198,12 @@ class ContentState extends State<Content> with SingleTickerProviderStateMixin {
           EmptySpace(
             width: 5.0,
           ),
-          Text(
-            contentTitle,
-            style: AppBarText,
+          Expanded(
+            child: Text(
+              contentTitle,
+              style: AppBarText,
+              overflow: TextOverflow.ellipsis,
+            ),
           ),
           EmptySpace(),
           Material(

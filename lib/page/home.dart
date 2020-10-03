@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:millad/page/book.dart';
 
 import '../storage/route.dart';
 import '../storage/palette.dart';
@@ -31,6 +30,7 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
   List<BookModel> maulidBooks = [];
   List<BookModel> otherBooks = [];
   List<BookModel> recentBooks = [];
+  List<BookModel> recentBooksDefault = [];
 
   HomeState(this.maulidBooks, this.otherBooks);
 
@@ -49,8 +49,16 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
     });
     this.maulidBooks = widget.maulidBooks;
     this.otherBooks = widget.otherBooks;
+    // setState(() {});
+    updateRecentPage();
+  }
 
-    widget.recentPageStorage.getRecentPages();
+  Future<void> updateRecentPage() async {
+    List<BookModel> bookReference = widget.maulidBooks + widget.otherBooks;
+    this.recentBooks =
+        await widget.recentPageStorage.getRecentPages(bookReference);
+    this.recentBooksDefault = this.recentBooks;
+    setState(() {});
   }
 
   @override
@@ -111,7 +119,9 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
               EmptySpace(
                 height: 20.0,
               ),
-              _recentBookBuilder(context),
+              this.recentBooks.length > 0
+                  ? _recentBookHolder(context)
+                  : Container(),
               EmptySpace(
                 height: 2.0,
               ),
@@ -133,6 +143,7 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
   _updateBookScreen(String value) {
     this.maulidBooks = _filter(widget.maulidBooks, value);
     this.otherBooks = _filter(widget.otherBooks, value);
+    this.recentBooks = _filter(this.recentBooksDefault, value);
     setState(() {});
   }
 
@@ -172,40 +183,25 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
     );
   }
 
-  Widget _recentBookBuilder(BuildContext context) {
-    print('I called again');
-    return FutureBuilder(
-        future: widget.recentPageStorage.getRecentPages(),
-        builder:
-            (BuildContext context, AsyncSnapshot<List<BookModel>> snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            if (snapshot.data == null) {
-              return Container();
-            }
-            if (snapshot.data.length > 0) {
-              return Container(
-                margin: EdgeInsets.only(top: 20.0),
-                // child: Container(),
-                child: _bookListHolder(context, 'Your recent book',
-                    snapshot.data.reversed.toList(),
-                    primary: true),
-              );
-            }
-          }
-          return Container();
-        });
+  Widget _recentBookHolder(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.only(top: 20.0),
+      child: _bookListHolder(
+          context, 'Your recent book', this.recentBooks.reversed.toList(),
+          recentBookTag: true),
+    );
   }
 
   Widget _bookListHolder(
       BuildContext context, String title, List<BookModel> bookList,
-      {primary: false}) {
+      {recentBookTag: false}) {
     return Container(
       child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
         Container(
           padding: EdgeInsets.only(left: 30.0),
           child: Text(
             title,
-            style: primary ? TitlePrimaryText : TitleBackgroundText,
+            style: recentBookTag ? TitlePrimaryText : TitleBackgroundText,
             textAlign: TextAlign.start,
           ),
         ),
@@ -220,8 +216,8 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
             scrollDirection: Axis.horizontal,
             physics: BouncingScrollPhysics(),
             children: bookList
-                .map((book) => _bookCard(context, book,
-                    primary: primary, index: book.lastIndex))
+                .map((book) =>
+                    _bookCard(context, book, recentBookTag: recentBookTag))
                 .toList(),
           ),
         )
@@ -270,28 +266,36 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
   }
 
   goToBookPage(BookModel book) async {
+    await contentCheck(book);
     await Navigator.pushNamed(context, AppRoute.BOOK_PAGE,
         arguments: {'book': book});
-    setState(() {});
+    updateRecentPage();
   }
 
-  goToBookContentPage(BookModel book, int index) async {
+  goToBookContentPage(BookModel book) async {
+    await contentCheck(book);
     await Navigator.pushNamed(context, AppRoute.BOOK_CONTENT_PAGE,
-        arguments: {'book': book, 'index': index});
-    setState(() {});
+        arguments: {'book': book, 'index': book.lastIndex});
+    updateRecentPage();
+  }
+
+  Future<void> contentCheck(BookModel book) async {
+    if (book.contents == null) {
+      print('going to check...');
+      await book.loadContent();
+    }
   }
 
   Widget _card(BuildContext context, BookModel book,
-      {bool primary: false, int index}) {
+      {bool recentBookTag: false}) {
     return Container(
       child: Material(
         color: Colors.transparent,
         child: InkWell(
           borderRadius: BorderRadius.circular(11.0),
           onTap: () {
-            widget.recentPageStorage.update(book.id, index ?? 0);
-            if (index != null) {
-              goToBookContentPage(book, index);
+            if (recentBookTag) {
+              goToBookContentPage(book);
             } else {
               goToBookPage(book);
             }
@@ -308,7 +312,7 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
         color: book.getColor(),
         boxShadow: [
           BoxShadow(
-              color: primary
+              color: recentBookTag
                   ? Colors.black.withAlpha(20)
                   : book.getColor().withAlpha(60),
               blurRadius: 3,
@@ -321,20 +325,22 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
   }
 
   Widget _bookCard(BuildContext context, BookModel book,
-      {primary: false, index}) {
+      {recentBookTag: false}) {
     return Container(
       padding: EdgeInsets.only(left: 5.0, top: 5.0, bottom: 5.0),
       child: Column(
         children: [
-          _card(context, book, primary: primary, index: index),
+          _card(context, book, recentBookTag: recentBookTag),
           EmptySpace(height: 9.0),
           Text(
             book.title,
-            style: primary ? TitlePrimaryText1 : TitleBackgroundText1,
+            style: recentBookTag ? TitlePrimaryText1 : TitleBackgroundText1,
           ),
           Text(
-            index != null ? "Page ${index + 1}" : "${book.totalPage} pages",
-            style: primary ? BodyPrimaryText1 : BodyBackgroundText1,
+            recentBookTag
+                ? "Page ${(book.lastIndex ?? 0) + 1}"
+                : "${book.totalPage} pages",
+            style: recentBookTag ? BodyPrimaryText1 : BodyBackgroundText1,
           )
         ],
       ),

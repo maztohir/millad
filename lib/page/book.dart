@@ -7,6 +7,7 @@ import 'package:flutter_svg/svg.dart';
 
 import '../storage/palette.dart';
 import '../storage/route.dart';
+import '../storage/recent_page.dart';
 import '../model/book.dart';
 import '../model/content.dart';
 import '../styles.dart';
@@ -15,6 +16,7 @@ import '../component/particles.dart';
 
 class Book extends StatefulWidget {
   final BookModel book;
+  final RecentPageStorage recentPageStorage = RecentPageStorage();
 
   Book(this.book);
 
@@ -219,11 +221,12 @@ class BookState extends State<Book> with SingleTickerProviderStateMixin {
     return Material(
       color: Colors.transparent,
       child: InkWell(
-        onTap: () => Navigator.pushNamed(context, AppRoute.BOOK_CONTENT_PAGE,
-            arguments: {
-              'book': widget.book,
-              'index': widget.book.contents.indexOf(content)
-            }),
+        onTap: () {
+          int contentIndex = widget.book.contents.indexOf(content);
+          widget.recentPageStorage.update(widget.book.id, contentIndex);
+          return Navigator.pushNamed(context, AppRoute.BOOK_CONTENT_PAGE,
+              arguments: {'book': widget.book, 'index': contentIndex});
+        },
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 30.0),
           child: Container(
