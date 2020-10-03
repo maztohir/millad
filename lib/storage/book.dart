@@ -1,26 +1,53 @@
-import 'dart:convert';
-
-import 'package:flutter/services.dart';
 import '../model/book.dart';
 
 class BookStorage {
-  Future<List<BookModel>> books() async {
-    String dibaJson =
-        await rootBundle.loadString("assets/books/diba/structure.json");
-    BookModel diba = BookModel.fromJson(jsonDecode(dibaJson));
+  List<BookModel> get maulidBoooks {
+    return [
+      BookModel(0, 'diba',
+          arabTitle: "الديبع",
+          contentUri: "assets/books/diba/content.json",
+          description:
+              "Pengarangnya adalah Imam Wajihuddin Abdu Ar-Rahman bin Muhammad bin Umar bin Ali bin Yusuf bin Ahmad bin Umar ad-simtudi (866H-944H), beliau berasal Zabid, salah satu kota di Yaman."),
+      BookModel(1, 'barzanji',
+          arabTitle: "البر زنجى",
+          contentUri: "assets/books/barzanji/content.json",
+          description:
+              "Pengarangnya adalah Imam Wajihuddin Abdu Ar-Rahman bin Muhammad bin Umar bin Ali bin Yusuf bin Ahmad bin Umar ad-simtudi (866H-944H), beliau berasal Zabid, salah satu kota di Yaman."),
+      BookModel(2, 'simtud',
+          arabTitle: "سمط الدرر",
+          contentUri: "assets/books/simtud/content.json",
+          description:
+              "Pengarangnya adalah Imam Wajihuddin Abdu Ar-Rahman bin Muhammad bin Umar bin Ali bin Yusuf bin Ahmad bin Umar ad-simtudi (866H-944H), beliau berasal Zabid, salah satu kota di Yaman."),
+      BookModel(3, 'burdah',
+          arabTitle: "البردة",
+          contentUri: "assets/books/burdah/content.json",
+          description:
+              "Pengarangnya adalah Imam Wajihuddin Abdu Ar-Rahman bin Muhammad bin Umar bin Ali bin Yusuf bin Ahmad bin Umar ad-simtudi (866H-944H), beliau berasal Zabid, salah satu kota di Yaman."),
+    ];
+  }
 
-    String barzanjiJson =
-        await rootBundle.loadString("assets/books/barzanji/structure.json");
-    BookModel barzanji = BookModel.fromJson(jsonDecode(barzanjiJson));
-
-    String simtudJson =
-        await rootBundle.loadString("assets/books/simtud/structure.json");
-    BookModel simtud = BookModel.fromJson(jsonDecode(simtudJson));
-
-    String burdahJson =
-        await rootBundle.loadString("assets/books/burdah/structure.json");
-    BookModel burdah = BookModel.fromJson(jsonDecode(burdahJson));
-
-    return [diba, barzanji, simtud, burdah];
+  List<BookModel> get otherBooks {
+    return [
+      BookModel(3, 'burdah',
+          arabTitle: "البردة",
+          contentUri: "assets/books/burdah/content.json",
+          description:
+              "Pengarangnya adalah Imam Wajihuddin Abdu Ar-Rahman bin Muhammad bin Umar bin Ali bin Yusuf bin Ahmad bin Umar ad-simtudi (866H-944H), beliau berasal Zabid, salah satu kota di Yaman."),
+      BookModel(0, 'diba',
+          arabTitle: "الديبع",
+          contentUri: "assets/books/diba/content.json",
+          description:
+              "Pengarangnya adalah Imam Wajihuddin Abdu Ar-Rahman bin Muhammad bin Umar bin Ali bin Yusuf bin Ahmad bin Umar ad-simtudi (866H-944H), beliau berasal Zabid, salah satu kota di Yaman."),
+      BookModel(2, 'simtud',
+          arabTitle: "سمط الدرر",
+          contentUri: "assets/books/simtud/content.json",
+          description:
+              "Pengarangnya adalah Imam Wajihuddin Abdu Ar-Rahman bin Muhammad bin Umar bin Ali bin Yusuf bin Ahmad bin Umar ad-simtudi (866H-944H), beliau berasal Zabid, salah satu kota di Yaman."),
+      BookModel(1, 'barzanji',
+          arabTitle: "البر زنجى",
+          contentUri: "assets/books/barzanji/content.json",
+          description:
+              "Pengarangnya adalah Imam Wajihuddin Abdu Ar-Rahman bin Muhammad bin Umar bin Ali bin Yusuf bin Ahmad bin Umar ad-simtudi (866H-944H), beliau berasal Zabid, salah satu kota di Yaman."),
+    ];
   }
 }

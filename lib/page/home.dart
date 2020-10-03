@@ -15,22 +15,22 @@ import '../component/EmptySpace.dart';
 import '../component/particles.dart';
 
 class Home extends StatefulWidget {
-  final List<BookModel> books = []; //BookStorage().books();
-  final List<BookModel> shuffleBooks = []; //BookStorage().books()..shuffle();
+  final List<BookModel> maulidBooks = BookStorage().maulidBoooks;
+  final List<BookModel> otherBooks = BookStorage().otherBooks;
 
   final RecentPageStorage recentPageStorage = RecentPageStorage();
 
   @override
   HomeState createState() {
-    return HomeState(books, shuffleBooks);
+    return HomeState(maulidBooks, otherBooks);
   }
 }
 
 class HomeState extends State<Home> with SingleTickerProviderStateMixin {
-  List<BookModel> books = [];
-  List<BookModel> shuffleBooks = [];
+  List<BookModel> maulidBooks = [];
+  List<BookModel> otherBooks = [];
 
-  HomeState(this.books, this.shuffleBooks);
+  HomeState(this.maulidBooks, this.otherBooks);
 
   @override
   void initState() {
@@ -39,11 +39,14 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
   }
 
   Future<void> loadBook() async {
-    List<BookModel> books = await BookStorage().books();
-    widget.books.addAll(books);
-    widget.shuffleBooks.addAll(books..shuffle());
-    print(books[0].arabTitle);
-    setState(() {});
+    widget.maulidBooks.forEach((element) {
+      element.loadContent();
+    });
+    widget.otherBooks.forEach((element) {
+      element.loadContent();
+    });
+    this.maulidBooks = widget.maulidBooks;
+    this.otherBooks = widget.otherBooks;
   }
 
   @override
@@ -124,8 +127,8 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
   }
 
   _updateBookScreen(String value) {
-    books = _filter(widget.books, value);
-    shuffleBooks = _filter(widget.shuffleBooks, value);
+    this.maulidBooks = _filter(widget.maulidBooks, value);
+    this.otherBooks = _filter(widget.otherBooks, value);
     setState(() {});
   }
 
@@ -168,13 +171,13 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
   Widget _recentBookBuilder(BuildContext context) {
     print('I called again');
     return FutureBuilder(
-        future: widget.recentPageStorage.getRecentPages(widget.books),
+        future: widget.recentPageStorage.getRecentPages(widget.maulidBooks),
         builder:
             (BuildContext context, AsyncSnapshot<List<BookModel>> snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
-            if (snapshot.data == null) {
-              return Container();
-            }
+            // if (snapshot.data == null) {
+            //   return Container();
+            // }
             if (snapshot.data.length > 0) {
               return Container(
                 margin: EdgeInsets.only(top: 20.0),
@@ -355,9 +358,9 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
       scrollDirection: Axis.vertical,
       physics: BouncingScrollPhysics(),
       children: [
-        _bookListHolder(context, "Maulid's related", books),
+        _bookListHolder(context, "Maulid's related", this.maulidBooks),
         EmptySpace(height: 10.0),
-        _bookListHolder(context, "Another sholawat", shuffleBooks)
+        _bookListHolder(context, "Another sholawat", this.otherBooks)
       ],
     );
   }

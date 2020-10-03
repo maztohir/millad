@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'content.dart';
 import '../storage/palette.dart';
@@ -8,12 +11,13 @@ class BookModel {
   String description;
   int id;
   String arabTitle;
+  String contentUri;
   int lastIndex;
 
   List<ContentModel> contents;
 
-  BookModel(this.id, this.title, this.description,
-      {this.arabTitle, this.contents});
+  BookModel(this.id, this.title,
+      {this.description, this.arabTitle, this.contents, this.contentUri});
 
   factory BookModel.fromJson(Map<String, dynamic> json) {
     var list = json['contents'] as List;
@@ -23,14 +27,23 @@ class BookModel {
     return BookModel(
       json['id'],
       json['title'],
-      json['description'],
+      description: json['description'],
       arabTitle: json['arab_title'],
       contents: contentList,
     );
   }
 
+  Future<void> loadContent() async {
+    String contentStr = await rootBundle.loadString(this.contentUri);
+    List<dynamic> contentList = jsonDecode(contentStr) as List;
+    List<ContentModel> contents =
+        contentList.map((i) => ContentModel.fromJson(i)).toList();
+    this.contents = contents;
+  }
+
   int get totalPage {
-    return this.contents.length ?? 0;
+    if (this.contents != null) return this.contents.length;
+    return 0;
   }
 
   getColor() {
