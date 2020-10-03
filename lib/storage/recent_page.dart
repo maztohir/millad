@@ -34,9 +34,6 @@ class RecentPageStorage {
 
   Future<List<BookModel>> getRecentPages(List<BookModel> bookDict) async {
     Map<String, dynamic> maps = await _getMap();
-    print('updating recent page');
-    print(maps);
-
     List<BookModel> recentBook = bookDict.where((book) {
       if (maps.containsKey(book.id.toString())) {
         book.lastIndex = maps[book.id.toString()];

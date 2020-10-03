@@ -169,7 +169,7 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
           style: TextStyle(fontSize: 16, color: Palette.primaryText),
           decoration: InputDecoration(
             hintStyle: TextStyle(fontSize: 15, color: Palette.primaryText02),
-            hintText: 'Search..',
+            hintText: 'Cari..',
             prefixIcon: Icon(
               Icons.search,
               size: 20,
@@ -187,7 +187,7 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
     return Container(
       margin: EdgeInsets.only(top: 20.0),
       child: _bookListHolder(
-          context, 'Your recent book', this.recentBooks.reversed.toList(),
+          context, 'Terakhir dibuka', this.recentBooks.reversed.toList(),
           recentBookTag: true),
     );
   }
@@ -281,7 +281,6 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
   Future<void> contentCheck(BookModel book) async {
     if (book.contents == null) {
-      print('going to check...');
       await book.loadContent();
     }
   }
@@ -338,8 +337,8 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
           ),
           Text(
             recentBookTag
-                ? "Page ${(book.lastIndex ?? 0) + 1}"
-                : "${book.totalPage} pages",
+                ? "Halaman ${(book.lastIndex ?? 0) + 1}"
+                : "${book.totalPage} Halaman",
             style: recentBookTag ? BodyPrimaryText1 : BodyBackgroundText1,
           )
         ],
@@ -368,9 +367,9 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
       scrollDirection: Axis.vertical,
       physics: BouncingScrollPhysics(),
       children: [
-        _bookListHolder(context, "Maulid's related", this.maulidBooks),
+        _bookListHolder(context, "Bacaan maulid", this.maulidBooks),
         EmptySpace(height: 10.0),
-        _bookListHolder(context, "Another sholawat", this.otherBooks)
+        _bookListHolder(context, "Kumpulan sholawat", this.otherBooks)
       ],
     );
   }

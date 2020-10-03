@@ -152,7 +152,7 @@ class BookState extends State<Book> with SingleTickerProviderStateMixin {
           style: TextStyle(fontSize: 16, color: Palette.primaryText),
           decoration: InputDecoration(
             hintStyle: TextStyle(fontSize: 15, color: Palette.primaryText02),
-            hintText: 'Search inside the book..',
+            hintText: 'Cari..',
             prefixIcon: Icon(
               Icons.search,
               size: 20,
@@ -200,7 +200,7 @@ class BookState extends State<Book> with SingleTickerProviderStateMixin {
         Container(
           padding: EdgeInsets.only(left: 30.0, top: 30.0),
           child: Text(
-            'Contents',
+            'Daftar isi',
             style: TitleBackgroundText,
           ),
         ),
