@@ -11,8 +11,8 @@ This project is using Flutter. For help getting started with Flutter, view our [
 ## How to Contribute
 
 To add more books or sholawat, please raise a PR by following below instruction:
-#### 1. Add your books title and description in `/lib/storage/book.dart`. You can put your book either in `maulidBoooks` or `otherBooks` list.
-#### 2. In assets (`/assets/books/`), please create folder which following this structure:
+1. Add your books title and description in `/lib/storage/book.dart`. You can put your book either in `maulidBoooks` or `otherBooks` list.
+2. In assets (`/assets/books/`), please create folder which following this structure:
 ```bash 
 ## Let say we add new book called `burdah`
 .
@@ -56,3 +56,22 @@ example:
 	</p>
 </div>
 ```
+3. Last, register your folder inside the `pubspec.yaml`
+```yaml
+flutter:
+
+  # The following line ensures that the Material Icons font is
+  # included with your application, so that you can use the icons in
+  # the material Icons class.
+  uses-material-design: true
+
+  # To add assets to your application, add an assets section, like this:
+  assets:
+    - assets/images/
+    - assets/books/burdah/
+```
+
+Violla. your book will be available in the app on the next release :) <br/>
+You can also fix the arabic text or the translation one if you find anything missed.
+
+Lets make this better.
