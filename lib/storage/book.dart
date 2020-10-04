@@ -3,22 +3,22 @@ import '../model/book.dart';
 class BookStorage {
   List<BookModel> get maulidBoooks {
     return [
-      BookModel(0, 'diba',
+      BookModel(0, "Diba'",
           arabTitle: "الديبع",
           contentUri: "assets/books/diba/content.json",
           description:
               "Pengarangnya adalah Imam Wajihuddin Abdu Ar-Rahman bin Muhammad bin Umar bin Ali bin Yusuf bin Ahmad bin Umar ad-simtudi (866H-944H), beliau berasal Zabid, salah satu kota di Yaman."),
-      BookModel(1, 'barzanji',
+      BookModel(1, 'Barzanji',
           arabTitle: "البر زنجى",
           contentUri: "assets/books/barzanji/content.json",
           description:
               "Nama Berzanji diambil dari nama pengarangnya yaitu Syekh Ja'far al-Barzanji bin Hasan bin Abdul Karim. Ia lahir di Madinah tahun 1690 dan meninggal tahun 1766. Barzanji berasal dari nama sebuah tempat di Kurdistan, Barzinj"),
-      BookModel(2, 'simtud',
+      BookModel(2, 'Simtudduror',
           arabTitle: "سمط الدرر",
           contentUri: "assets/books/simtud/content.json",
           description:
               "Pengarangnya adalah Al-Habib Al-Imam Al-Allamah Ali bin Muhammad bin Husin Al-Habsyi, dilahirkan pada hari Juma’at 24 Syawal 1259 H di Qasam, sebuah kota di negeri Hadhramaut. Di antara putera-putera beliau yang dikenal di Indonesia ialah puteranya yang bongsu; Al-Habib Alwi bin Ali Al-Habsyi, pendiri Masjid “Riyadh” di kota Solo (Surakarta)"),
-      BookModel(3, 'burdah',
+      BookModel(3, 'Burdah',
           arabTitle: "البردة",
           contentUri: "assets/books/burdah/content.json",
           description:
