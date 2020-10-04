@@ -55,8 +55,7 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
   Future<void> updateRecentPage() async {
     List<BookModel> bookReference = widget.maulidBooks + widget.otherBooks;
-    this.recentBooks =
-        await widget.recentPageStorage.getRecentPages(bookReference);
+    this.recentBooks = await widget.recentPageStorage.getList(bookReference);
     this.recentBooksDefault = this.recentBooks;
     setState(() {});
   }
@@ -187,7 +186,7 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
     return Container(
       margin: EdgeInsets.only(top: 20.0),
       child: _bookListHolder(
-          context, 'Terakhir dibuka', this.recentBooks.reversed.toList(),
+          context, 'Terakhir dibuka', this.recentBooks.toList(),
           recentBookTag: true),
     );
   }
@@ -275,7 +274,7 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
   goToBookContentPage(BookModel book) async {
     await contentCheck(book);
     await Navigator.pushNamed(context, AppRoute.BOOK_CONTENT_PAGE,
-        arguments: {'book': book, 'index': book.lastIndex});
+        arguments: {'book': book, 'index': book.lastPageOpened});
     updateRecentPage();
   }
 
@@ -337,7 +336,7 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
           ),
           Text(
             recentBookTag
-                ? "Halaman ${(book.lastIndex ?? 0) + 1}"
+                ? "Halaman ${(book.lastPageOpened ?? 0) + 1}"
                 : "${book.totalPage} Halaman",
             style: recentBookTag ? BodyPrimaryText1 : BodyBackgroundText1,
           )

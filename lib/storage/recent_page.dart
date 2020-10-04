@@ -4,50 +4,42 @@ import '../model/book.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class RecentPageStorage {
-  static const KEY = 'RECENT-PAGE-STORAGE-KEY';
-
-  Future<Map<String, dynamic>> _getMap() async {
-    SharedPreferences pref = await SharedPreferences.getInstance();
-    String values = pref.getString(KEY);
-    // pref.remove(KEY);
-    try {
-      return jsonDecode(values);
-    } catch (e) {
-      print(e);
-      return {};
-    }
-  }
-
-  _saveMap(Map<String, dynamic> recents) async {
-    SharedPreferences pref = await SharedPreferences.getInstance();
-    String str = json.encode(recents);
-    pref.setString(KEY, str);
-  }
+  static const MAP = 'RECENT-PAGE-STORAGE-KEY-MAP';
+  static const LIST = 'RECENT-PAGE-STORAGE-KEY-LIST';
 
   update(int bookId, int page) async {
-    Map<String, dynamic> recents = await _getMap();
-    recents.remove(bookId.toString());
-    recents[bookId.toString()] = page;
+    SharedPreferences pref = await SharedPreferences.getInstance();
 
-    _saveMap(recents);
+    Map<String, dynamic> recentPageMap =
+        jsonDecode(pref.getString(MAP) ?? "{}");
+
+    recentPageMap[bookId.toString()] = page;
+    pref.setString(MAP, json.encode(recentPageMap));
+
+    List<String> recentPageList = pref.getStringList(LIST) ?? [];
+    recentPageList.removeWhere((element) => element == bookId.toString());
+    recentPageList.insert(0, bookId.toString());
+    if (recentPageList.length > 5) recentPageList.removeLast();
+    print(recentPageList);
+    pref.setStringList(LIST, recentPageList);
   }
 
-  Future<List<BookModel>> getRecentPages(List<BookModel> bookDict) async {
-    Map<String, dynamic> maps = await _getMap();
+  Future<List<BookModel>> getList(List<BookModel> bookDict) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+
+    Map<String, dynamic> recentPageMap =
+        jsonDecode(pref.getString(MAP) ?? "{}");
+    List<String> recentPageList = pref.getStringList(LIST) ?? [];
+
     List<BookModel> recentBook = bookDict.where((book) {
-      if (maps.containsKey(book.id.toString())) {
-        book.lastIndex = maps[book.id.toString()];
+      if (recentPageList.contains(book.id.toString())) {
+        book.lastPageOpened = recentPageMap[book.id.toString()];
+        book.recentIndex = recentPageList.indexOf(book.id.toString());
         return true;
       }
       return false;
     }).toList();
-    // maps.forEach((key, value) {
-    //   BookModel book = bookDict.singleWhere(
-    //     (el) => el.id == int.parse(key),
-    //   );
-    //   book.lastIndex = value;
-    //   books.add(book);
-    // });
+    recentBook..sort((a, b) => a.recentIndex.compareTo(b.recentIndex));
     return recentBook;
   }
 }

@@ -12,7 +12,9 @@ class BookModel {
   int id;
   String arabTitle;
   String contentUri;
-  int lastIndex;
+
+  int lastPageOpened;
+  int recentIndex;
 
   List<ContentModel> contents;
 
