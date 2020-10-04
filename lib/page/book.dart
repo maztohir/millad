@@ -89,10 +89,10 @@ class BookState extends State<Book> with SingleTickerProviderStateMixin {
                 EmptySpace(
                   height: 20.0,
                 ),
-                _searchBar(),
-                EmptySpace(
-                  height: 20.0,
-                ),
+                // _searchBar(),
+                // EmptySpace(
+                //   height: 20.0,
+                // ),
               ],
             )),
           ],
