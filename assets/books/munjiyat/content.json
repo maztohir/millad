@@ -1,14 +1,10 @@
 [
   {
-    "title": "Tentang Sholawat Munjiyat",
+    "title": "Bacaan Sholawat Munjiyat",
     "content_uri": "assets/books/munjiyat/web1.html"
   },
   {
-    "title": "Bacaan Sholawat Munjiyat",
-    "content_uri": "assets/books/munjiyat/web2.html"
-  },
-  {
     "title": "Keistemewaan Sholawat Munjiyat",
-    "content_uri": "assets/books/munjiyat/web3.html"
+    "content_uri": "assets/books/munjiyat/web2.html"
   }
 ]

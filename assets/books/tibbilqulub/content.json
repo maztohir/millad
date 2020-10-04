@@ -1,18 +1,14 @@
 [
   {
-    "title": "Tentang Sholawat Tibbil Qulub",
+    "title": "Bacaan Sholawat Tibbil Qulub",
     "content_uri": "assets/books/tibbilqulub/web1.html"
   },
   {
-    "title": "Bacaan Sholawat Tibbil Qulub",
+    "title": "Keistimewaan Sholawat Tibbil Qulub",
     "content_uri": "assets/books/tibbilqulub/web2.html"
   },
   {
-    "title": "Keistimewaan Sholawat Tibbil Qulub",
-    "content_uri": "assets/books/tibbilqulub/web3.html"
-  },
-  {
     "title": "Cara Baca Sholawat Tibbil Qulub",
-    "content_uri": "assets/books/tibbilqulub/web4.html"
+    "content_uri": "assets/books/tibbilqulub/web3.html"
   }
 ]

@@ -42,7 +42,7 @@ class BookStorage {
           arabTitle: "تبيل قلوب",
           contentUri: "assets/books/tibbilqulub/content.json",
           description:
-              "Pengarangnya adalah Imam Wajihuddin Abdu Ar-Rahman bin Muhammad bin Umar bin Ali bin Yusuf bin Ahmad bin Umar ad-simtudi (866H-944H), beliau berasal Zabid, salah satu kota di Yaman."),
+              "Sholawat Tibbil Qulul adalah karya Syekh Ahmad Dardiri. Sholawat Ini Juga dinamakan Sholawat nuril Abshor"),
     ];
   }
 }

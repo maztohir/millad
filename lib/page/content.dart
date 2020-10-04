@@ -294,7 +294,8 @@ class ContentState extends State<Content> with SingleTickerProviderStateMixin {
               textAlign: TextAlign.center,
             ),
             "p": Style(
-              margin: EdgeInsets.only(bottom: this.translationActive ? 30 : 0),
+              margin: EdgeInsets.only(bottom: this.translationActive ? 50 : 0),
+              fontSize: FontSize(15.0),
             ),
             ".arab": Style.fromTextStyle(ContentArabicText),
             ".translate": this.translationActive
