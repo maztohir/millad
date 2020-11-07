@@ -24,3 +24,6 @@ chocoMilkColor() => isDark() ? Color(0xFF563A23) : Color(0xFFCBA26C);
 dustyGreenColor() => isDark() ? Color(0xFF444836) : Color(0xFFB2C389);
 toscaPufColor() => isDark() ? Color(0xFF3A4540) : Color(0xFF92BBA8);
 softGreyColor() => isDark() ? Color(0xFF484C4D) : Color(0xFF94AAAC);
+
+// other colors
+lampColor() => isDark() ? Color(0xFFFAD16B) : Color(0xFFFFFFFF);

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:global_configuration/global_configuration.dart';
 
 import '../storage/global_conf.dart';
 import '../storage/route.dart';
@@ -108,27 +109,28 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
         children: [
           Positioned.fill(child: Particles(5)),
           SafeArea(
-              child: Column(
-            children: [
-              EmptySpace(
-                height: 50.0,
-              ),
-              _logo(),
-              EmptySpace(
-                height: 20.0,
-              ),
-              _searchBar(context),
-              EmptySpace(
-                height: 20.0,
-              ),
-              // this.recentBooks.length > 0
-              //     ? _recentBookHolder(context)
-              //     : Container(),
-              EmptySpace(
-                height: 2.0,
-              ),
-            ],
-          )),
+            child: Column(
+              children: [
+                EmptySpace(
+                  height: this.recentBooks.length > 0 ? 50.0 : 150.0,
+                ),
+                _logo(),
+                EmptySpace(
+                  height: this.recentBooks.length > 0 ? 20.0 : 150.0,
+                ),
+                _actionBar(context),
+                EmptySpace(
+                  height: 20.0,
+                ),
+                this.recentBooks.length > 0
+                    ? _recentBookHolder(context)
+                    : Container(),
+                EmptySpace(
+                  height: 2.0,
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );
@@ -157,9 +159,51 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
         .toList();
   }
 
+  Widget _actionBar(BuildContext context) {
+    // return _searchBar(context);
+    return Container(
+      child: Row(
+        children: [
+          _darkModeToggle(context),
+          EmptySpace(width: 10.0),
+          Expanded(
+            child: _searchBar(context),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _darkModeToggle(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.only(left: 30),
+      child: Container(
+          child: ClipOval(
+        child: Material(
+          color: background04Color(), // button color
+          child: InkWell(
+            child: Container(
+              width: 40,
+              height: 40,
+              child: Icon(
+                isDark() ? Icons.wb_incandescent : Icons.wb_incandescent,
+                color: lampColor(),
+                size: isDark() ? 18.0 : 20.0,
+              ),
+            ),
+            onTap: () {
+              toggleLight();
+              setState(() {});
+            },
+          ),
+        ),
+      )),
+    );
+  }
+
   Widget _searchBar(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 30),
+      padding: EdgeInsets.only(right: 30),
       child: Container(
         height: 38,
         decoration: BoxDecoration(
