@@ -6,11 +6,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../storage/route.dart';
-import '../storage/palette.dart';
+import '../storage/global_color.dart';
 import '../storage/book.dart';
 import '../storage/recent_page.dart';
 import '../model/book.dart';
-import '../styles.dart';
+import '../storage/global_text_style.dart';
 import '../component/EmptySpace.dart';
 import '../component/particles.dart';
 
@@ -31,6 +31,8 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
   List<BookModel> otherBooks = [];
   List<BookModel> recentBooks = [];
   List<BookModel> recentBooksDefault = [];
+
+  bool isDark = false;
 
   HomeState(this.maulidBooks, this.otherBooks);
 
@@ -67,7 +69,7 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
     ));
 
     return Scaffold(
-      backgroundColor: Palette.background,
+      backgroundColor: backgroundColor(),
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(0.0),
         child: AppBar(
@@ -96,7 +98,7 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.only(
             bottomLeft: Radius.circular(20), bottomRight: Radius.circular(20)),
-        color: Palette.primary,
+        color: primaryColor(),
         boxShadow: [
           BoxShadow(color: Colors.black26, blurRadius: 3, spreadRadius: 1)
         ],
@@ -160,19 +162,19 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
       child: Container(
         height: 38,
         decoration: BoxDecoration(
-          color: Palette.background04,
+          color: background04Color(),
           borderRadius: BorderRadius.circular(15),
         ),
         child: TextField(
           onChanged: (vv) => _onSearchChangedHandler(vv),
-          style: TextStyle(fontSize: 16, color: Palette.primaryText),
+          style: TextStyle(fontSize: 16, color: primaryTextColor()),
           decoration: InputDecoration(
-            hintStyle: TextStyle(fontSize: 15, color: Palette.primaryText02),
+            hintStyle: TextStyle(fontSize: 15, color: primaryText02Color()),
             hintText: 'Cari..',
             prefixIcon: Icon(
               Icons.search,
               size: 20,
-              color: Palette.primaryText,
+              color: primaryTextColor(),
             ),
             border: InputBorder.none,
             contentPadding: EdgeInsets.symmetric(vertical: 4, horizontal: 20),
@@ -200,7 +202,9 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
           padding: EdgeInsets.only(left: 30.0),
           child: Text(
             title,
-            style: recentBookTag ? TitlePrimaryText : TitleBackgroundText,
+            style: recentBookTag
+                ? titlePrimaryTextStyle()
+                : titleBackgroundTextStyle(),
             textAlign: TextAlign.start,
           ),
         ),
@@ -253,7 +257,7 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
                   padding: EdgeInsets.only(bottom: 14.0),
                   child: Text(
                     book.arabTitle ?? book.title,
-                    style: ArabTitleText,
+                    style: arabTitleTextStyle(),
                   ),
                 )
               ],
@@ -332,13 +336,17 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
           EmptySpace(height: 9.0),
           Text(
             book.title,
-            style: recentBookTag ? TitlePrimaryText1 : TitleBackgroundText1,
+            style: recentBookTag
+                ? titlePrimaryText1Style()
+                : titleBackgroundText1Style(),
           ),
           Text(
             recentBookTag
                 ? "Halaman ${(book.lastPageOpened ?? 0) + 1}"
                 : "${book.totalPage} Halaman",
-            style: recentBookTag ? BodyPrimaryText1 : BodyBackgroundText1,
+            style: recentBookTag
+                ? bodyPrimaryText1Style()
+                : bodyBackgroundText1Style(),
           )
         ],
       ),
@@ -355,7 +363,10 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
         EmptySpace(
           width: 10.0,
         ),
-        Text('Millad', style: LogoText),
+        Text(
+          'Millad',
+          style: logoTextStyle(),
+        ),
       ]),
     );
   }

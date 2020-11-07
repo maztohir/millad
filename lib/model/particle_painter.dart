@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../storage/palette.dart';
+import '../storage/global_color.dart';
 import './particle_model.dart';
 
 class ParticlePainter extends CustomPainter {
@@ -11,7 +11,7 @@ class ParticlePainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final paint = Paint()..color = Palette.backgroundParticle;
+    final paint = Paint()..color = backgroundParticleColor();
 
     particles.forEach((particle) {
       var progress = particle.animationProgress.progress(time);

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:global_configuration/global_configuration.dart';
+import 'package:millad/storage/global_conf.dart';
 
-import './styles.dart';
+import 'storage/global_text_style.dart';
 
 import './storage/route.dart';
-import './storage/palette.dart';
+import 'storage/global_color.dart';
 
 import './page/home.dart';
 import './page/book.dart';
@@ -26,8 +28,10 @@ class MyApp extends StatelessWidget {
 
   static ThemeData _themeData() {
     return ThemeData(
-        textTheme: TextTheme(bodyText2: BodyBackgroundText),
-        primaryColor: Palette.primary);
+        textTheme: TextTheme(
+          bodyText2: bodyBackgroundTextStyle(),
+        ),
+        primaryColor: primaryColor());
   }
 
   RouteFactory _routes() {

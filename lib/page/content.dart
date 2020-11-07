@@ -5,11 +5,11 @@ import 'package:flutter_html/style.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_html/flutter_html.dart';
 
-import '../storage/palette.dart';
+import '../storage/global_color.dart';
 import '../storage/recent_page.dart';
 import '../model/book.dart';
 import '../model/content.dart';
-import '../styles.dart';
+import '../storage/global_text_style.dart';
 import '../component/EmptySpace.dart';
 import '../component/particles.dart';
 
@@ -59,7 +59,7 @@ class ContentState extends State<Content> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Palette.background,
+      backgroundColor: backgroundColor(),
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(0.0),
         child: AppBar(
@@ -96,7 +96,7 @@ class ContentState extends State<Content> with SingleTickerProviderStateMixin {
           bottomLeft: Radius.circular(20),
           bottomRight: Radius.circular(20),
         ),
-        color: Palette.primary,
+        color: primaryColor(),
         boxShadow: [
           BoxShadow(color: Colors.black12, blurRadius: 3, spreadRadius: 2)
         ],
@@ -129,7 +129,7 @@ class ContentState extends State<Content> with SingleTickerProviderStateMixin {
             topLeft: Radius.circular(20),
             topRight: Radius.circular(20),
           ),
-          color: Palette.primary,
+          color: primaryColor(),
           boxShadow: [
             BoxShadow(color: Colors.black12, blurRadius: 3, spreadRadius: 2)
           ],
@@ -168,10 +168,10 @@ class ContentState extends State<Content> with SingleTickerProviderStateMixin {
       child: Text(
         pageLabel,
         style: TextStyle(
-          fontFamily: FontNameDefault,
+          fontFamily: fontNameDefault,
           fontWeight: FontWeight.w500,
           fontSize: 11.0,
-          color: Palette.primaryText,
+          color: primaryTextColor(),
         ),
       ),
     );
@@ -209,7 +209,7 @@ class ContentState extends State<Content> with SingleTickerProviderStateMixin {
           Expanded(
             child: Text(
               contentTitle,
-              style: AppBarText,
+              style: appBarTextStyle(),
               overflow: TextOverflow.ellipsis,
             ),
           ),
@@ -282,7 +282,7 @@ class ContentState extends State<Content> with SingleTickerProviderStateMixin {
 
   Widget _bodyContent(BuildContext context, String content) {
     return Container(
-      color: Palette.background,
+      color: backgroundColor(),
       height: double.infinity,
       width: double.infinity,
       child: SingleChildScrollView(
@@ -297,10 +297,10 @@ class ContentState extends State<Content> with SingleTickerProviderStateMixin {
               margin: EdgeInsets.only(bottom: this.translationActive ? 50 : 0),
               fontSize: FontSize(15.0),
             ),
-            ".arab": Style.fromTextStyle(ContentArabicText),
+            ".arab": Style.fromTextStyle(contentArabicTextStyle()),
             ".translate": this.translationActive
-                ? Style.fromTextStyle(ContentTranslateText)
-                : Style.fromTextStyle(HideText),
+                ? Style.fromTextStyle(contentTranslateTextStyle())
+                : Style.fromTextStyle(hideTextStyle()),
           },
         ),
       ),
