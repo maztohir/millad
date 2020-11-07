@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'content.dart';
-import '../storage/palette.dart';
+import '../storage/global_color.dart';
 
 class BookModel {
   String title;
@@ -50,13 +50,13 @@ class BookModel {
 
   getColor() {
     List<Color> colors = [
-      Palette.dustyPink,
-      Palette.sweetGreen,
-      Palette.powderBlue,
-      Palette.chocoMilk,
-      Palette.dustyGreen,
-      Palette.toscaPuf,
-      Palette.softGrey
+      dustyPinkColor(),
+      sweetGreenColor(),
+      powderBlueColor(),
+      chocoMilkColor(),
+      dustyGreenColor(),
+      toscaPufColor(),
+      softGreyColor()
     ];
     return colors[this.id % colors.length];
   }

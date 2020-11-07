@@ -33,6 +33,7 @@ dependencies:
   flutter_html: ^1.0.2
   flutter_launcher_icons: ^0.8.0
   shared_preferences: ^0.5.12
+  global_configuration: ^1.6.0
 
 flutter_icons:
   ios: true
@@ -68,6 +69,7 @@ flutter:
     - assets/books/aqidatulawam/
     - assets/books/munjiyat/
     - assets/books/tibbilqulub/
+    - assets/cfg/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

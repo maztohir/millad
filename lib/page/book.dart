@@ -5,12 +5,13 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../storage/palette.dart';
+import '../storage/global_conf.dart';
+import '../storage/global_text_style.dart';
+import '../storage/global_color.dart';
 import '../storage/route.dart';
 import '../storage/recent_page.dart';
 import '../model/book.dart';
 import '../model/content.dart';
-import '../styles.dart';
 import '../component/EmptySpace.dart';
 import '../component/particles.dart';
 
@@ -32,7 +33,7 @@ class BookState extends State<Book> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Palette.background,
+      backgroundColor: backgroundColor(),
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(0.0),
         child: AppBar(
@@ -62,10 +63,13 @@ class BookState extends State<Book> with SingleTickerProviderStateMixin {
           borderRadius: BorderRadius.only(
               bottomLeft: Radius.circular(20),
               bottomRight: Radius.circular(20)),
-          color: Palette.primary,
-          boxShadow: [
-            BoxShadow(color: Colors.black26, blurRadius: 3, spreadRadius: 1)
-          ],
+          color: primaryColor(),
+          boxShadow: isDark()
+              ? []
+              : [
+                  BoxShadow(
+                      color: Colors.black26, blurRadius: 3, spreadRadius: 1)
+                ],
         ),
         child: Stack(
           children: [
@@ -111,7 +115,7 @@ class BookState extends State<Book> with SingleTickerProviderStateMixin {
               padding: EdgeInsets.all(10.0),
               child: Icon(
                 Icons.arrow_back,
-                color: Colors.white,
+                color: primaryTextColor(),
               ),
             )),
       ),
@@ -144,19 +148,19 @@ class BookState extends State<Book> with SingleTickerProviderStateMixin {
       child: Container(
         height: 38,
         decoration: BoxDecoration(
-          color: Palette.background04,
+          color: background04Color(),
           borderRadius: BorderRadius.circular(15),
         ),
         child: TextField(
           onChanged: (vv) => _onSearchChangedHandler(vv),
-          style: TextStyle(fontSize: 16, color: Palette.primaryText),
+          style: TextStyle(fontSize: 16, color: primaryTextColor()),
           decoration: InputDecoration(
-            hintStyle: TextStyle(fontSize: 15, color: Palette.primaryText02),
+            hintStyle: TextStyle(fontSize: 15, color: primaryText02Color()),
             hintText: 'Cari..',
             prefixIcon: Icon(
               Icons.search,
               size: 20,
-              color: Palette.primaryText,
+              color: primaryTextColor(),
             ),
             border: InputBorder.none,
             contentPadding: EdgeInsets.symmetric(vertical: 4, horizontal: 20),
@@ -172,12 +176,12 @@ class BookState extends State<Book> with SingleTickerProviderStateMixin {
       child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
         SvgPicture.asset(
           'assets/images/logo.svg',
-          color: Colors.white,
+          color: primaryTextColor(),
         ),
         EmptySpace(
           width: 10.0,
         ),
-        Text(widget.book.title, style: LogoText),
+        Text(widget.book.title, style: logoTextStyle()),
       ]),
     );
   }
@@ -187,7 +191,7 @@ class BookState extends State<Book> with SingleTickerProviderStateMixin {
       padding: EdgeInsets.only(left: 30.0, right: 30.0),
       child: Text(
         widget.book.description,
-        style: BodyPrimaryText,
+        style: bodyPrimaryTextStyle(),
       ),
     );
   }
@@ -201,7 +205,7 @@ class BookState extends State<Book> with SingleTickerProviderStateMixin {
           padding: EdgeInsets.only(left: 30.0, top: 30.0),
           child: Text(
             'Daftar isi',
-            style: TitleBackgroundText,
+            style: titleBackgroundTextStyle(),
           ),
         ),
         Expanded(
@@ -233,12 +237,12 @@ class BookState extends State<Book> with SingleTickerProviderStateMixin {
             padding: EdgeInsets.symmetric(vertical: 25.0),
             decoration: BoxDecoration(
               border: Border(
-                bottom: BorderSide(width: 0.3, color: Palette.backgroundText04),
+                bottom: BorderSide(width: 0.3, color: backgroundText04Color()),
               ),
             ),
             child: Text(
               content.title,
-              style: BodyBackgroundText,
+              style: bodyBackgroundTextStyle(),
             ),
           ),
         ),
