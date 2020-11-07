@@ -5,6 +5,7 @@ import 'package:flutter_html/style.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_html/flutter_html.dart';
 
+import '../storage/global_conf.dart';
 import '../storage/global_color.dart';
 import '../storage/recent_page.dart';
 import '../model/book.dart';
@@ -97,9 +98,11 @@ class ContentState extends State<Content> with SingleTickerProviderStateMixin {
           bottomRight: Radius.circular(20),
         ),
         color: primaryColor(),
-        boxShadow: [
-          BoxShadow(color: Colors.black12, blurRadius: 3, spreadRadius: 2)
-        ],
+        boxShadow: isDark()
+            ? []
+            : [
+                BoxShadow(color: Colors.black12, blurRadius: 3, spreadRadius: 2)
+              ],
       ),
       child: Stack(
         children: [
@@ -130,9 +133,12 @@ class ContentState extends State<Content> with SingleTickerProviderStateMixin {
             topRight: Radius.circular(20),
           ),
           color: primaryColor(),
-          boxShadow: [
-            BoxShadow(color: Colors.black12, blurRadius: 3, spreadRadius: 2)
-          ],
+          boxShadow: isDark()
+              ? []
+              : [
+                  BoxShadow(
+                      color: Colors.black12, blurRadius: 3, spreadRadius: 2)
+                ],
         ),
         child: Stack(
           children: [
@@ -198,7 +204,7 @@ class ContentState extends State<Content> with SingleTickerProviderStateMixin {
                 padding: EdgeInsets.all(10.0),
                 child: Icon(
                   Icons.arrow_back,
-                  color: Colors.white,
+                  color: primaryTextColor(),
                 ),
               ),
             ),
@@ -225,7 +231,7 @@ class ContentState extends State<Content> with SingleTickerProviderStateMixin {
                   this.translationActive
                       ? 'assets/images/icon_translate_active.svg'
                       : 'assets/images/icon_translate.svg',
-                  color: Colors.white,
+                  color: primaryTextColor(),
                   width: 23,
                 ),
               ),

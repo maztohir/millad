@@ -4,8 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:millad/storage/global_text_style.dart';
 
+import '../storage/global_conf.dart';
+import '../storage/global_text_style.dart';
 import '../storage/global_color.dart';
 import '../storage/route.dart';
 import '../storage/recent_page.dart';
@@ -63,9 +64,12 @@ class BookState extends State<Book> with SingleTickerProviderStateMixin {
               bottomLeft: Radius.circular(20),
               bottomRight: Radius.circular(20)),
           color: primaryColor(),
-          boxShadow: [
-            BoxShadow(color: Colors.black26, blurRadius: 3, spreadRadius: 1)
-          ],
+          boxShadow: isDark()
+              ? []
+              : [
+                  BoxShadow(
+                      color: Colors.black26, blurRadius: 3, spreadRadius: 1)
+                ],
         ),
         child: Stack(
           children: [
@@ -111,7 +115,7 @@ class BookState extends State<Book> with SingleTickerProviderStateMixin {
               padding: EdgeInsets.all(10.0),
               child: Icon(
                 Icons.arrow_back,
-                color: Colors.white,
+                color: primaryTextColor(),
               ),
             )),
       ),
@@ -172,7 +176,7 @@ class BookState extends State<Book> with SingleTickerProviderStateMixin {
       child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
         SvgPicture.asset(
           'assets/images/logo.svg',
-          color: Colors.white,
+          color: primaryTextColor(),
         ),
         EmptySpace(
           width: 10.0,

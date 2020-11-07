@@ -5,6 +5,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 
+import '../storage/global_conf.dart';
 import '../storage/route.dart';
 import '../storage/global_color.dart';
 import '../storage/book.dart';
@@ -31,8 +32,6 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
   List<BookModel> otherBooks = [];
   List<BookModel> recentBooks = [];
   List<BookModel> recentBooksDefault = [];
-
-  bool isDark = false;
 
   HomeState(this.maulidBooks, this.otherBooks);
 
@@ -99,9 +98,11 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
         borderRadius: BorderRadius.only(
             bottomLeft: Radius.circular(20), bottomRight: Radius.circular(20)),
         color: primaryColor(),
-        boxShadow: [
-          BoxShadow(color: Colors.black26, blurRadius: 3, spreadRadius: 1)
-        ],
+        boxShadow: isDark()
+            ? []
+            : [
+                BoxShadow(color: Colors.black26, blurRadius: 3, spreadRadius: 1)
+              ],
       ),
       child: Stack(
         children: [
@@ -120,9 +121,9 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
               EmptySpace(
                 height: 20.0,
               ),
-              this.recentBooks.length > 0
-                  ? _recentBookHolder(context)
-                  : Container(),
+              // this.recentBooks.length > 0
+              //     ? _recentBookHolder(context)
+              //     : Container(),
               EmptySpace(
                 height: 2.0,
               ),
@@ -237,7 +238,7 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
               padding: EdgeInsets.only(top: 13.0),
               child: SvgPicture.asset(
                 'assets/images/mosque.svg',
-                color: Colors.white,
+                color: primaryTextColor(),
               ),
             ),
           ),
@@ -249,7 +250,7 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
                   width: double.infinity,
                   child: SvgPicture.asset(
                     book.getCoverStyle(),
-                    color: Colors.white,
+                    color: primaryTextColor(),
                     fit: BoxFit.fill,
                   ),
                 ),
@@ -312,15 +313,17 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(11),
         color: book.getColor(),
-        boxShadow: [
-          BoxShadow(
-              color: recentBookTag
-                  ? Colors.black.withAlpha(20)
-                  : book.getColor().withAlpha(60),
-              blurRadius: 3,
-              spreadRadius: 2,
-              offset: Offset(0.5, 3)),
-        ],
+        boxShadow: isDark()
+            ? []
+            : [
+                BoxShadow(
+                    color: recentBookTag
+                        ? Colors.black.withAlpha(20)
+                        : book.getColor().withAlpha(60),
+                    blurRadius: 3,
+                    spreadRadius: 2,
+                    offset: Offset(0.5, 3)),
+              ],
       ),
       margin: EdgeInsets.only(right: 12.0),
     );
@@ -358,7 +361,7 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
       child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
         SvgPicture.asset(
           'assets/images/logo.svg',
-          color: Colors.white,
+          color: primaryTextColor(),
         ),
         EmptySpace(
           width: 10.0,
