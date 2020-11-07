@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:millad/storage/global_conf.dart';
+
+import './global_conf.dart';
 
 primaryColor() => isDark() ? Color(0xFF1A3636) : Color(0xFF177170);
 

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:global_configuration/global_configuration.dart';
-import 'package:millad/storage/global_conf.dart';
 
 import 'storage/global_text_style.dart';
 

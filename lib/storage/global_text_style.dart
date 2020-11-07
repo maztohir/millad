@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:millad/storage/global_color.dart';
+
+import './global_color.dart';
 
 const String fontNameDefault = 'Source Sans Pro';
 
